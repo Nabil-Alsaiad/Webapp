@@ -1,0 +1,32 @@
+### Get all the visitors
+GET {{hostname}}/visitors
+Content-Type: application/json
+
+### Get a visitor by id
+GET {{hostname}}/visitor/1
+Content-Type: application/json
+
+### Get a visitor by name
+GET {{hostname}}/visitor
+Content-Type: application/json
+
+{
+  "name": "Norah Tan"
+}
+
+### Get a visitor by phone
+GET {{hostname}}/visitor
+Content-Type: application/json
+
+{
+  "phone": "601234567804"
+}
+
+### Create a visitor
+POST {{hostname}}/visitor
+Content-Type: application/json
+
+{
+  "name": "Yes Yes",
+  "phone": "000000000001"
+}

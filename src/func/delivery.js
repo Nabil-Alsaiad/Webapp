@@ -1,0 +1,79 @@
+import Delivery from '../class/data/delivery.js'
+import db from '../db.js'
+
+/**
+ * @param {string} name
+ * @param {import('../types').Phone} phone
+ * @param {import('../types').Email} email
+ * @param {string} license_id
+ * @param {import('../types').ID} company_id
+ * @returns {Promise<Delivery | null>}
+ */
+async function registerOne(name, phone, email, license_id, company_id) {
+  const sql = `
+  INSERT INTO deliveries (name, phone, email, license_id, company_id)
+  VALUES (?, ?, ?, ?, ?)
+  `
+
+  try {
+    await db.query(sql, [name, phone, email, license_id, company_id])
+    return await getOne({ name, phone, email, license_id, company_id })
+  } catch (err) {
+    console.error(err.message)
+    return null
+  }
+}
+
+/**
+ * @param {object} options
+ * @param {import('../types.js').ID} [options.id]
+ * @param {string} [options.name]
+ * @param {import('../types.js').Phone} [options.phone]
+ * @param {import('../types').Email} [options.email]
+ * @param {string} [options.license_id]
+ * @param {import('../types').ID} [options.company_id]
+ * @returns {Promise<Delivery | null>}
+ */
+async function getOne(options) {
+  const conditions = []
+  const params = []
+
+  const keys = ['id', 'name', 'phone', 'email', 'license_id', 'company_id']
+  keys.forEach((key) => {
+    if (options[key]) {
+      conditions.push(`${key} = ?`)
+      params.push(options[key])
+    }
+  })
+
+  if (conditions.length === 0) {
+    return null
+  }
+
+  const sql = `SELECT * FROM deliveries WHERE ${conditions.join(' AND ')}`
+
+  try {
+    const [rows] = await db.query(sql, params)
+    const data = rows[0]
+    return Delivery.Construct(data)
+  } catch (err) {
+    console.error(err.message)
+    return null
+  }
+}
+
+/**
+ * @returns {Promise<Delivery[] | null>}
+ */
+async function getMany() {
+  const sql = 'SELECT * FROM deliveries'
+
+  const [rows] = await db.query(sql)
+  // @ts-expect-error
+  const deliveries = rows.map((row) => Delivery.Construct(row))
+  return deliveries
+}
+
+export const registerDelivery = registerOne
+export const getDelivery = getOne
+export const getDeliveries = getMany

@@ -1,0 +1,25 @@
+### Login with correct values
+POST {{hostname}}/login
+Content-Type: application/json
+
+{
+  "email": "one@email.com",
+  "password": "601234567890"
+}
+
+### Login with non existing email
+POST {{hostname}}/login
+Content-Type: application/json
+
+{
+  "email": "z@email.com",
+}
+
+### Login with wrong password
+POST {{hostname}}/login
+Content-Type: application/json
+
+{
+  "email": "one@email.com",
+  "password": "z"
+}

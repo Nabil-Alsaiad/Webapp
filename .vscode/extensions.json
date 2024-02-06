@@ -7,6 +7,11 @@
     "chamboug.js-auto-backticks",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "yoavbls.pretty-ts-errors",
+    "humao.rest-client",
+    "dsznajder.es7-react-js-snippets"
   ]
 }

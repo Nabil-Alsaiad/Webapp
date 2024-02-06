@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "./src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "dev": "npx nodemon .",
+    "lint": "eslint . --fix --ignore-path ../.gitignore",
+    "format": "prettier . --write --config ../.prettierrc.json --ignore-path ../.gitignore"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.7.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "eslint": "*",
+    "nodemon": "^3.0.3",
+    "prettier": "*"
+  }
+}

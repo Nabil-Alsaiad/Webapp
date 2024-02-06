@@ -1,0 +1,29 @@
+/* ReportHistory.css */
+
+/* Style for the Report History table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  color: rgb(0, 204, 255);
+}
+
+th {
+  background-color: #88fa79;
+}
+
+/* Additional styling for the page layout */
+h2 {
+  margin-bottom: 30px;
+  margin-top: 80px;
+  margin-left: 150px;
+  color: rgb(0, 162, 255);
+}

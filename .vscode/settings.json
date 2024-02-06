@@ -3,32 +3,15 @@
   "editor.formatOnSaveMode": "file",
   "editor.formatOnSave": true,
   "editor.trimAutoWhitespace": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
-  },
 
   "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
-    "editor.formatOnSaveMode": "file",
-    "editor.formatOnSave": true,
-    "editor.trimAutoWhitespace": true,
-
-    "editor.unicodeHighlight.ambiguousCharacters": false,
-    "editor.unicodeHighlight.invisibleCharacters": false,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.wordWrap": "off",
-
-    "cSpell.fixSpellingWithRenameProvider": true,
-    "cSpell.advanced.feature.useReferenceProviderWithRename": true,
-    "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
   "markdown.replaceSmartQuotes": true,
 
   "javascript.suggest.jsdoc.generateReturns": true,
   "javascript.suggest.completeJSDocs": true,
   "javascript.suggest.autoImports": true,
-
   "js/ts.implicitProjectConfig.checkJs": true,
 
   "rest-client.environmentVariables": {
@@ -36,5 +19,7 @@
     "Local": {
       "hostname": "http://localhost:8888"
     }
-  }
+  },
+
+  "liveServer.settings.port": 5501
 }

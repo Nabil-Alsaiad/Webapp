@@ -1,0 +1,25 @@
+/* NewAnnouncement.css */
+
+/* Add your styling for NewAnnouncement.jsx here */
+h2 {
+  color: #007bff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* You can customize the styles based on your design */

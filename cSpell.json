@@ -2,6 +2,6 @@
   "caseSensitive": true,
   "useGitignore": true,
   "language": "en-GB",
-  "files": ["./src/**/*", "./tests/**/*", "README.md"],
+  "files": ["**/*.{js,jsx}", "**/*.md"],
   "words": ["endregion"]
 }

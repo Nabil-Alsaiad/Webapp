@@ -1,33 +1,13 @@
 {
-  "name": "soft-eng",
+  "name": "visitor-management-system",
   "version": "1.0.0",
   "description": "Assignment project",
-  "main": "./src/app.js",
-  "type": "module",
-  "scripts": {
-    "start": "node .",
-    "dev": "npx nodemon .",
-    "lint": "eslint . --fix --ignore-path .gitignore",
-    "format": "prettier . --write --ignore-path .gitignore",
-    "test": "npx jest"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Nabil-Alsaiad/Webapp.git"
   },
-  "keywords": [],
-  "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mysql2": "^3.7.0",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/jest": "*",
-    "@types/node": "^20.11.0",
-    "eslint": "*",
-    "nodemon": "^3.0.3",
-    "prettier": "*"
-  }
+  "keywords": [
+    "webapp"
+  ],
+  "license": "MIT"
 }

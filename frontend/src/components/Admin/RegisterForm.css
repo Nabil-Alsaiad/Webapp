@@ -1,0 +1,23 @@
+/* Add this style for form labels and inputs */
+form {
+  display: grid;
+  gap: 15px;
+  margin-left: 50px;
+  margin-top: 20px;
+  font-size: large;
+  color: brown;
+}
+
+/* Add this style for the submit button */
+button {
+  padding: 10px;
+  background-color: #5635eb; /* Change to your desired button color */
+  color: #b81717; /* Change to your desired button text color */
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #71a40b; /* Change to your desired hover button color */
+}

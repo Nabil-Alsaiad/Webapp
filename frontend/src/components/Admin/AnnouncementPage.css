@@ -1,0 +1,28 @@
+/* AnnouncementPage.css */
+
+/* Add your styling for AnnouncementPage.jsx here */
+h1 {
+  color: #333;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 50px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  color: rgb(47, 0, 255);
+}
+/* You can customize the styles based on your design */

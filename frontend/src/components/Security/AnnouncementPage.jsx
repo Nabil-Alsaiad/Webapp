@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewAnnouncements from "./NewAnnouncement";
 import "./AnnouncementPage.css";
 
-const CreateAnnouncement = ({ onCreateAnnouncement }) => {
+function CreateAnnouncement({ onCreateAnnouncement }) {
   const [announcementTitle, setAnnouncementTitle] = useState("");
   const [announcementDescription, setAnnouncementDescription] = useState("");
 
@@ -52,7 +52,7 @@ const CreateAnnouncement = ({ onCreateAnnouncement }) => {
       </button>
     </div>
   );
-};
+}
 
 const AnnouncementPage = () => {
   const [announcements, setAnnouncements] = useState([]);

@@ -1,7 +1,7 @@
 import React from "react";
 import "./MaintenanceApproval.css"; // Import the CSS file for styling
 
-const MaintenanceApproval = () => {
+function MaintenanceApproval() {
   const maintenanceReportData = [];
 
   return (
@@ -37,6 +37,6 @@ const MaintenanceApproval = () => {
       </table>
     </div>
   );
-};
+}
 
 export default MaintenanceApproval;

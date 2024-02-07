@@ -2,7 +2,7 @@
 import React from "react";
 import "./ReportHistory.css";
 
-const ReportHistory = ({ reports }) => {
+function ReportHistory({ reports }) {
   return (
     <div>
       <h2>Report History</h2>
@@ -28,6 +28,6 @@ const ReportHistory = ({ reports }) => {
       </table>
     </div>
   );
-};
+}
 
 export default ReportHistory;

@@ -5,7 +5,7 @@ import AnnouncementPage from "./AnnouncementPage";
 import "./TenantSidebar.css";
 import Logout from "../../Logout";
 
-const TenantSidebar = () => {
+function TenantSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
   const [showReportPage, setShowReportPage] = useState(false);
   const [showAnnouncementPage, setShowAnnouncementPage] = useState(false);
@@ -55,6 +55,6 @@ const TenantSidebar = () => {
       {showAnnouncementPage && <AnnouncementPage />}
     </div>
   );
-};
+}
 
 export default TenantSidebar;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
+function Logout() {
   const navigate = useNavigate();
 
   const onClick = () => {
@@ -15,6 +15,6 @@ const Logout = () => {
       <span className="nav-item">Log out</span>
     </a>
   );
-};
+}
 
 export default Logout;

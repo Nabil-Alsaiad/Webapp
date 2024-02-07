@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ onFormSubmit }) => {
+function Login() {
   const [userType, setUserType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -91,6 +91,6 @@ const Login = ({ onFormSubmit }) => {
       </form>
     </div>
   );
-};
+}
 
 export default Login;

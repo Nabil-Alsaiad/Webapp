@@ -5,7 +5,7 @@ import "./VisitorSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
 
-const VisitorSidebar = () => {
+function VisitorSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
   return (
@@ -31,6 +31,6 @@ const VisitorSidebar = () => {
       {subpageIndex === 1 && <QRVerification />}
     </div>
   );
-};
+}
 
 export default VisitorSidebar;

@@ -5,7 +5,7 @@ import "./DeveloperSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
 
-const DeveloperSidebar = () => {
+function DeveloperSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
   return (
@@ -30,6 +30,6 @@ const DeveloperSidebar = () => {
       {subpageIndex === 1 && <ReportSubmission />}
     </div>
   );
-};
+}
 
 export default DeveloperSidebar;

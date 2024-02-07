@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const ViewUser = () => {
+function ViewUser() {
   const [userData, setUserData] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedCell, setSelectedCell] = useState(null);
@@ -74,6 +74,6 @@ const ViewUser = () => {
       </table>
     </div>
   );
-};
+}
 
 export default ViewUser;

@@ -8,7 +8,7 @@ import MaintenanceApproval from "./MaintenanceApproval";
 import "./AdminSidebar.css";
 import Logout from "../../Logout";
 
-const AdminSidebar = () => {
+function AdminSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
   const [subMaintenancePagesVisible, setSubMaintenancePagesVisible] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -167,6 +167,6 @@ const AdminSidebar = () => {
       {showMaintenanceApproval && <MaintenanceApproval />}
     </div>
   );
-};
+}
 
 export default AdminSidebar;

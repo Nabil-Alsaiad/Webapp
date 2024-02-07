@@ -5,7 +5,7 @@ import "./DeliverySidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
 
-const DeliverySidebar = () => {
+function DeliverySidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
   return (
@@ -31,6 +31,6 @@ const DeliverySidebar = () => {
       {subpageIndex === 1 && <QRVerification />}
     </div>
   );
-};
+}
 
 export default DeliverySidebar;

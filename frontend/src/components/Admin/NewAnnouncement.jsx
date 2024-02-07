@@ -3,7 +3,7 @@
 import React from "react";
 import "./NewAnnouncement.css";
 
-const NewAnnouncements = ({ announcements }) => {
+function NewAnnouncements({ announcements }) {
   return (
     <div>
       <h2>New Announcements</h2>
@@ -27,6 +27,6 @@ const NewAnnouncements = ({ announcements }) => {
       </table>
     </div>
   );
-};
+}
 
 export default NewAnnouncements;

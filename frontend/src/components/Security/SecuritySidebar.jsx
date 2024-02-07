@@ -5,7 +5,7 @@ import AnnouncementPage from "./AnnouncementPage";
 import "./SecuritySidebar.css";
 import Logout from "../../Logout";
 
-const SecuritySidebar = () => {
+function SecuritySidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
   const [showReportPage, setShowReportPage] = useState(false);
   const [showAnnouncementPage, setShowAnnouncementPage] = useState(false);
@@ -55,6 +55,6 @@ const SecuritySidebar = () => {
       {showAnnouncementPage && <AnnouncementPage />}
     </div>
   );
-};
+}
 
 export default SecuritySidebar;

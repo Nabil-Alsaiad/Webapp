@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ReportSubmission.css"; // Import the CSS file for styling
 
-const ReportSubmission = () => {
+function ReportSubmission() {
   const [reportNo, setReportNo] = useState("");
   const [status, setStatus] = useState("Resolved");
   const [overallReport, setOverallReport] = useState("");
@@ -52,6 +52,6 @@ const ReportSubmission = () => {
       </form>
     </div>
   );
-};
+}
 
 export default ReportSubmission;

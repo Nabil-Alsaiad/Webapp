@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MaintenanceSchedule.css"; // Import the CSS file for styling
 
-const MaintenanceSchedule = () => {
+function MaintenanceSchedule() {
   const [maintenanceData, setMaintenanceData] = useState(() => {
     // Retrieve data from localStorage on initial load
     const storedData = localStorage.getItem("maintenanceData");
@@ -86,6 +86,6 @@ const MaintenanceSchedule = () => {
       <button onClick={handleSave}>Save</button>
     </div>
   );
-};
+}
 
 export default MaintenanceSchedule;

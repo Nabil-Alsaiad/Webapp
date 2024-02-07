@@ -6,7 +6,7 @@ import "./ContractorSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
 
-const ContractorSidebar = () => {
+function ContractorSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
   return (
@@ -31,6 +31,6 @@ const ContractorSidebar = () => {
       {subpageIndex === 1 && <ReportSubmission />}
     </div>
   );
-};
+}
 
 export default ContractorSidebar;

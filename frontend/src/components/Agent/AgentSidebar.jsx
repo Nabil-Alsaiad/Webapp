@@ -5,7 +5,7 @@ import AnnouncementPage from "./AnnouncementPage";
 import "./AgentSidebar.css";
 import Logout from "../../Logout";
 
-const AgentSidebar = () => {
+function AgentSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
   const [showReportPage, setShowReportPage] = useState(false);
   const [showAnnouncementPage, setShowAnnouncementPage] = useState(false);
@@ -55,6 +55,6 @@ const AgentSidebar = () => {
       {showAnnouncementPage && <AnnouncementPage />}
     </div>
   );
-};
+}
 
 export default AgentSidebar;

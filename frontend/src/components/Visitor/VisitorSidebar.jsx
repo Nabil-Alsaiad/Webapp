@@ -16,11 +16,9 @@ function VisitorSidebar() {
           <li>
             <Logo />
           </li>
-
           <li>
             <SubpagesContainer onIndexChange={setSubpageIndex} name={"Profile"} subpagesNames={["Register User", "QR Verification"]} />
           </li>
-
           <li>
             <Logout />
           </li>

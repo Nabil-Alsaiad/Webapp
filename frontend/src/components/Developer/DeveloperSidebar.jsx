@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ReportSubmission from "./ReportSubmission";
-import MaintenanceSchedule from "./MaintenanceSchedule";
+import ReportSubmission from "../core/ReportSubmission";
+import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import "./DeveloperSidebar.css";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
@@ -19,7 +19,6 @@ function DeveloperSidebar() {
           <li>
             <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
           </li>
-
           <li>
             <Logout />
           </li>

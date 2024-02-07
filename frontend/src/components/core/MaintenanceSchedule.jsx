@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./MaintenanceSchedule.css"; // Import the CSS file for styling
 
 function MaintenanceSchedule() {
   const [maintenanceData, setMaintenanceData] = useState(() => {

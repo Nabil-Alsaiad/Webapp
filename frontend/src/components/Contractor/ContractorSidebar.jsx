@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ReportSubmission from "./ReportSubmission";
-import MaintenanceSchedule from "./MaintenanceSchedule";
+import ReportSubmission from "../core/ReportSubmission";
+import MaintenanceSchedule from "../core/MaintenanceSchedule";
 
 import "./ContractorSidebar.css";
 import Logout from "../core/Logout";

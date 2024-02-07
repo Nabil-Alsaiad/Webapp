@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ReportPage from "./ReportPage";
-import AnnouncementPage from "./AnnouncementPage";
+import ReportPage from "../core/ReportPage";
+import AnnouncementPage from "../core/AnnouncementPage";
 
 import "./TenantSidebar.css";
 import Logout from "../core/Logout";

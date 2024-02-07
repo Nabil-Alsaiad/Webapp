@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import RegisterForm from "../core/RegisterForm";
 import ViewUser from "./ViewUser";
-import ReportPage from "./ReportPage";
-import AnnouncementPage from "./AnnouncementPage";
-import MaintenanceSchedule from "./MaintenanceSchedule";
+import ReportPage from "../core/ReportPage";
+import AnnouncementPage from "../core/AnnouncementPage";
+import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import MaintenanceApproval from "./MaintenanceApproval";
 import "./AdminSidebar.css";
 import Logout from "../core/Logout";

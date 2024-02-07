@@ -4,7 +4,6 @@ import QRVerification from "../core/QRVerification";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
 import Logo from "../core/Logo";
-import "./sidebar.css";
 
 function VisitorSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);

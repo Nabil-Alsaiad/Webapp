@@ -4,7 +4,6 @@ import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
 import Logo from "../core/Logo";
-import "./sidebar.css";
 
 function DeveloperSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);

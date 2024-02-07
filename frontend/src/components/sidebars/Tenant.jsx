@@ -3,7 +3,6 @@ import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
 import Logout from "../core/Logout";
 import Logo from "../core/Logo";
-import "./sidebar.css";
 
 function TenantSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

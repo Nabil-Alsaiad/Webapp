@@ -8,11 +8,10 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve the logged in account from local storage if it exists
     const savedAccount = localStorage.getItem("loggedInAccount");
     const loggedInAccount = savedAccount ? JSON.parse(savedAccount) : {};
     if (loggedInAccount.email) {
-      navigate(`/${loggedInAccount.userType}`);
+      navigate("/");
     }
   }, [navigate]);
 
@@ -55,7 +54,7 @@ function Login() {
     }
 
     localStorage.setItem("loggedInAccount", JSON.stringify({ email, userType }));
-    navigate(`/${userType}`);
+    navigate("/");
   };
 
   return (

@@ -4,7 +4,6 @@ import QRVerification from "../core/QRVerification";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
 import Logo from "../core/Logo";
-import "./sidebar.css";
 
 function DeliverySidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);

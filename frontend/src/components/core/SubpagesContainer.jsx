@@ -6,9 +6,10 @@ import PropTypes from "prop-types";
  * @param {Function} options.onIndexChange
  * @param {string} options.name
  * @param {string[]} options.subpagesNames
+ * @param {string} [options.iconName]
  * @returns {React.JSX.Element}
  */
-function SubpagesContainer({ onIndexChange, name, subpagesNames }) {
+function SubpagesContainer({ onIndexChange, name, subpagesNames, iconName = "user" }) {
   const [visible, toggleVisibility] = useState(false);
 
   const onMainButtonClick = () => {
@@ -18,7 +19,7 @@ function SubpagesContainer({ onIndexChange, name, subpagesNames }) {
   return (
     <>
       <a className="container-button" onClick={onMainButtonClick}>
-        <i className="fas fa-wrench"></i>
+        <i className={`fas fa-${iconName}`}></i>
         <span className="nav-item">{name}</span>
       </a>
 
@@ -38,7 +39,8 @@ function SubpagesContainer({ onIndexChange, name, subpagesNames }) {
 SubpagesContainer.propTypes = {
   name: PropTypes.string.isRequired,
   onIndexChange: PropTypes.func.isRequired,
-  subpagesNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  subpagesNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  iconName: PropTypes.string
 };
 
 export default SubpagesContainer;

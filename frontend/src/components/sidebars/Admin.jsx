@@ -57,7 +57,7 @@ function AdminSidebar({ onPageChosen }) {
         </a>
       </li>
       <li>
-        <SubpagesContainer onIndexChange={handleClick2} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Maintenance Approval"]} />
+        <SubpagesContainer onIndexChange={handleClick2} name={"Maintenance"} iconName={"wrench"} subpagesNames={["Maintenance Schedule", "Maintenance Approval"]} />
       </li>
     </>
   );

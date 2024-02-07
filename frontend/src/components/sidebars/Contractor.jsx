@@ -22,7 +22,7 @@ function ContractorSidebar({ onPageChosen }) {
 
   return (
     <li>
-      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
+      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} iconName={"wrench"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
     </li>
   );
 }

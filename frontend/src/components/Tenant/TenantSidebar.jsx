@@ -4,6 +4,7 @@ import AnnouncementPage from "./AnnouncementPage";
 
 import "./TenantSidebar.css";
 import Logout from "../../Logout";
+import Logo from "../Logo";
 
 function TenantSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -27,9 +28,7 @@ function TenantSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
           <li>
             <a href="#" onClick={toggleReportPage}>

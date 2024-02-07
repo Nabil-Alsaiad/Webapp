@@ -7,6 +7,7 @@ import MaintenanceSchedule from "./MaintenanceSchedule";
 import MaintenanceApproval from "./MaintenanceApproval";
 import "./AdminSidebar.css";
 import Logout from "../../Logout";
+import Logo from "../Logo";
 
 function AdminSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -103,9 +104,7 @@ function AdminSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
 
           <li>

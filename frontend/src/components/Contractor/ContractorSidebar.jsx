@@ -5,6 +5,7 @@ import MaintenanceSchedule from "./MaintenanceSchedule";
 import "./ContractorSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
+import Logo from "../Logo";
 
 function ContractorSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
@@ -14,9 +15,7 @@ function ContractorSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
           <li>
             <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />

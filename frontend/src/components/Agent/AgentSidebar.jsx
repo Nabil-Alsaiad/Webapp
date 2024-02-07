@@ -4,6 +4,7 @@ import AnnouncementPage from "./AnnouncementPage";
 
 import "./AgentSidebar.css";
 import Logout from "../../Logout";
+import Logo from "../Logo";
 
 function AgentSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -27,9 +28,7 @@ function AgentSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
           <li>
             <a href="#" onClick={toggleReportPage}>

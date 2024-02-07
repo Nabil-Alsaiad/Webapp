@@ -4,6 +4,7 @@ import MaintenanceSchedule from "./MaintenanceSchedule";
 import "./DeveloperSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
+import Logo from "../Logo";
 
 function DeveloperSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
@@ -13,9 +14,7 @@ function DeveloperSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
           <li>
             <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />

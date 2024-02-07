@@ -4,6 +4,7 @@ import QRVerification from "./QRVerification";
 import "./VisitorSidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
+import Logo from "../Logo";
 
 function VisitorSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
@@ -13,9 +14,7 @@ function VisitorSidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Visitor Management System</span>
-            </a>
+            <Logo />
           </li>
 
           <li>

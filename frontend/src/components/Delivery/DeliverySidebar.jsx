@@ -4,6 +4,7 @@ import QRVerification from "./QRVerification";
 import "./DeliverySidebar.css";
 import Logout from "../../Logout";
 import SubpagesContainer from "../SubpagesContainer";
+import Logo from "../Logo";
 
 function DeliverySidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
@@ -13,9 +14,7 @@ function DeliverySidebar() {
       <nav>
         <ul>
           <li>
-            <a className="logo">
-              <span className="nav-item">Delivery Management System</span>
-            </a>
+            <Logo />
           </li>
 
           <li>

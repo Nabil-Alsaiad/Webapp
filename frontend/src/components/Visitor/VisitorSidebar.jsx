@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RegisterForm from "./VisitorRegisterForm";
 import QRVerification from "./QRVerification";
 import "./VisitorSidebar.css";
+import Logout from "../../Logout";
 
 const VisitorSidebar = () => {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -51,10 +52,7 @@ const VisitorSidebar = () => {
           </div>
 
           <li>
-            <a href="" className="logout">
-              <i className="fas fa-sign-out-alt"></i>
-              <span className="nav-item">Log out</span>
-            </a>
+            <Logout />
           </li>
         </ul>
       </nav>

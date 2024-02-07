@@ -3,6 +3,7 @@ import ReportPage from "./ReportPage";
 import AnnouncementPage from "./AnnouncementPage";
 
 import "./AgentSidebar.css";
+import Logout from "../../Logout";
 
 const AgentSidebar = () => {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -45,10 +46,7 @@ const AgentSidebar = () => {
           </li>
 
           <li>
-            <a href="" className="logout">
-              <i className="fas fa-sign-out-alt"></i>
-              <span className="nav-item">Log out</span>
-            </a>
+            <Logout />
           </li>
         </ul>
       </nav>

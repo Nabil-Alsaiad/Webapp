@@ -3,6 +3,7 @@ import ReportSubmission from "./ReportSubmission";
 import MaintenanceSchedule from "./MaintenanceSchedule";
 
 import "./ContractorSidebar.css";
+import Logout from "../../Logout";
 
 const ContractorSidebar = () => {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -62,10 +63,7 @@ const ContractorSidebar = () => {
           </div>
 
           <li>
-            <a href="" className="logout">
-              <i className="fas fa-sign-out-alt"></i>
-              <span className="nav-item">Log out</span>
-            </a>
+            <Logout />
           </li>
         </ul>
       </nav>

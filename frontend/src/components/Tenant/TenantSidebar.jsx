@@ -3,6 +3,7 @@ import ReportPage from "./ReportPage";
 import AnnouncementPage from "./AnnouncementPage";
 
 import "./TenantSidebar.css";
+import Logout from "../../Logout";
 
 const TenantSidebar = () => {
   const [subPagesVisible, setSubPagesVisible] = useState(false);
@@ -45,10 +46,7 @@ const TenantSidebar = () => {
           </li>
 
           <li>
-            <a href="" className="logout">
-              <i className="fas fa-sign-out-alt"></i>
-              <span className="nav-item">Log out</span>
-            </a>
+            <Logout />
           </li>
         </ul>
       </nav>

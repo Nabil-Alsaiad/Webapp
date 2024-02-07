@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import RegisterForm from "../core/RegisterForm";
-import QRVerification from "../core/QRVerification";
-import "./VisitorSidebar.css";
+import ReportSubmission from "../core/ReportSubmission";
+import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
 import Logo from "../core/Logo";
+import "./sidebar.css";
 
-function VisitorSidebar() {
+function DeveloperSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
   return (
@@ -17,17 +17,17 @@ function VisitorSidebar() {
             <Logo />
           </li>
           <li>
-            <SubpagesContainer onIndexChange={setSubpageIndex} name={"Profile"} subpagesNames={["Register User", "QR Verification"]} />
+            <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
           </li>
           <li>
             <Logout />
           </li>
         </ul>
       </nav>
-      {subpageIndex === 0 && <RegisterForm />}
-      {subpageIndex === 1 && <QRVerification />}
+      {subpageIndex === 0 && <MaintenanceSchedule />}
+      {subpageIndex === 1 && <ReportSubmission />}
     </div>
   );
 }
 
-export default VisitorSidebar;
+export default DeveloperSidebar;

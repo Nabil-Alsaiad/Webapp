@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminSidebar from "./components/Admin/AdminSidebar";
-import DeveloperSidebar from "./components/Developer/DeveloperSidebar";
-import DeliverySidebar from "./components/Delivery/DeliverySidebar";
-import ContractorSidebar from "./components/Contractor/ContractorSidebar";
-import AgentSidebar from "./components/Agent/AgentSidebar";
-import SecuritySidebar from "./components/Security/SecuritySidebar";
-import VisitorSidebar from "./components/Visitor/VisitorSidebar";
-import TenantSidebar from "./components/Tenant/TenantSidebar";
+import AdminSidebar from "./components/sidebars/Admin";
+import DeveloperSidebar from "./components/sidebars/Developer";
+import DeliverySidebar from "./components/sidebars/Delivery";
+import ContractorSidebar from "./components/sidebars/Contractor";
+import AgentSidebar from "./components/sidebars/Agent";
+import SecuritySidebar from "./components/sidebars/Security";
+import VisitorSidebar from "./components/sidebars/Visitor";
+import TenantSidebar from "./components/sidebars/Tenant";
 import Login from "./Login";
 import "./App.css";
 

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
-
-import "./SecuritySidebar.css";
 import Logout from "../core/Logout";
 import Logo from "../core/Logo";
+import "./sidebar.css";
 
 function SecuritySidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

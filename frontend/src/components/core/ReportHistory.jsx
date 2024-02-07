@@ -1,4 +1,3 @@
-// ReportHistory.jsx
 import React from "react";
 import "./ReportHistory.css";
 

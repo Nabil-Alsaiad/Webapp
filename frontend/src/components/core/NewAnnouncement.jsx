@@ -1,5 +1,3 @@
-// NewAnnouncement.jsx
-
 import React from "react";
 import "./NewAnnouncement.css";
 

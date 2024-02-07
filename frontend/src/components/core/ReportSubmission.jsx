@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ReportSubmission.css"; // Import the CSS file for styling
+import "./ReportSubmission.css";
 
 function ReportSubmission() {
   const [reportNo, setReportNo] = useState("");

@@ -1,6 +1,6 @@
 import React from "react";
-import "./RegisterForm.css";
 import PropTypes from "prop-types";
+import "./RegisterForm.css";
 
 /**
  * @param {object} options

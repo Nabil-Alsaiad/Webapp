@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
-
-import "./AgentSidebar.css";
 import Logout from "../core/Logout";
 import Logo from "../core/Logo";
+import "./sidebar.css";
 
 function AgentSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

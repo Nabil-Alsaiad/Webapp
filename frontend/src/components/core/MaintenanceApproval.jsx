@@ -1,5 +1,4 @@
 import React from "react";
-import "./MaintenanceApproval.css"; // Import the CSS file for styling
 
 function MaintenanceApproval() {
   const maintenanceReportData = [];

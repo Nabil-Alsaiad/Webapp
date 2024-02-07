@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import RegisterForm from "../core/RegisterForm";
-import ViewUser from "./ViewUser";
+import ViewUser from "../core/ViewUser";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
 import MaintenanceSchedule from "../core/MaintenanceSchedule";
-import MaintenanceApproval from "./MaintenanceApproval";
-import "./AdminSidebar.css";
+import MaintenanceApproval from "../core/MaintenanceApproval";
 import Logout from "../core/Logout";
 import Logo from "../core/Logo";
+import "./sidebar.css";
 
 function AdminSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

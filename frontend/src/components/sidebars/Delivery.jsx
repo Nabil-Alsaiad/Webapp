@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import RegisterForm from "../core/RegisterForm";
 import QRVerification from "../core/QRVerification";
-import "./DeliverySidebar.css";
 import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
 import Logo from "../core/Logo";
+import "./sidebar.css";
 
 function DeliverySidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);

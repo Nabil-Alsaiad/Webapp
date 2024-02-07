@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RegisterForm from "./VisitorRegisterForm";
+import RegisterForm from "../core/VisitorRegisterForm";
 import QRVerification from "./QRVerification";
 import "./DeliverySidebar.css";
 import Logout from "../../Logout";

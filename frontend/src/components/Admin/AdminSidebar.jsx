@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RegisterForm from "./RegisterForm";
+import RegisterForm from "../core/RegisterForm";
 import ViewUser from "./ViewUser";
 import ReportPage from "./ReportPage";
 import AnnouncementPage from "./AnnouncementPage";
@@ -158,7 +158,7 @@ function AdminSidebar() {
           </li>
         </ul>
       </nav>
-      {showRegisterForm && <RegisterForm />}
+      {showRegisterForm && <RegisterForm extra={true} />}
       {showViewUser && <ViewUser />}
       {showReportPage && <ReportPage />}
       {showAnnouncementPage && <AnnouncementPage />}

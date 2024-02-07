@@ -30,7 +30,7 @@ const VisitorSidebar = () => {
       <nav>
         <ul>
           <li>
-            <a href="" className="logo">
+            <a className="logo">
               <span className="nav-item">Visitor Management System</span>
             </a>
           </li>

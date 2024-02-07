@@ -4,21 +4,22 @@ import "./RegisterForm.css";
 function RegisterForm() {
   function submitForm() {
     // Store the form data in localStorage
-    const userData = JSON.parse(localStorage.getItem("userData")) || [];
+    const storedUserData = localStorage.getItem("userData");
+    const userData = storedUserData ? JSON.parse(storedUserData) : [];
     const userObject = {
-      userId: document.getElementById("userId").value,
-      name: document.getElementById("name").value,
-      contactNumber: document.getElementById("contactNumber").value,
-      userType: document.getElementById("userType").value,
-      registerDate: document.getElementById("registerDate").value,
-      emailAddress: document.getElementById("emailAddress").value,
-      unitNumber: document.getElementById("unitNumber").value
+      userId: document.getElementById("userId")?.value,
+      name: document.getElementById("name")?.value,
+      contactNumber: document.getElementById("contactNumber")?.value,
+      userType: document.getElementById("userType")?.value,
+      registerDate: document.getElementById("registerDate")?.value,
+      emailAddress: document.getElementById("emailAddress")?.value,
+      unitNumber: document.getElementById("unitNumber")?.value
     };
     userData.push(userObject);
     localStorage.setItem("userData", JSON.stringify(userData));
 
     // Clear the form after submission
-    document.getElementById("RegisterForm").reset();
+    document.getElementById("RegisterForm")?.reset();
     alert("Form submitted!");
   }
 

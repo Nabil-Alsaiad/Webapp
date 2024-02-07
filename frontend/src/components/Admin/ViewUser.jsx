@@ -6,7 +6,8 @@ const ViewUser = () => {
   const [selectedCell, setSelectedCell] = useState(null);
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData")) || [];
+    const userData = localStorage.getItem("userData");
+    const storedData = userData ? JSON.parse(userData) : [];
     setUserData(storedData);
   }, []);
 

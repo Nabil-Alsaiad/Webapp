@@ -17,7 +17,8 @@ const ReportSubmission = () => {
     };
 
     // Retrieve existing reports from local storage
-    const existingReports = JSON.parse(localStorage.getItem("maintenanceReports")) || [];
+    const maintenanceReports = localStorage.getItem("maintenanceReports");
+    const existingReports = maintenanceReports ? JSON.parse(maintenanceReports) : [];
 
     // Add the new report to the existing reports
     const updatedReports = [...existingReports, newReport];

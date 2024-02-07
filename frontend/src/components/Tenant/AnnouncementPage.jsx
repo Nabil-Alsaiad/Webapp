@@ -59,7 +59,8 @@ const AnnouncementPage = () => {
 
   useEffect(() => {
     // Load data from local storage when component mounts
-    const storedAnnouncements = JSON.parse(localStorage.getItem("announcementData")) || [];
+    const announcementData = localStorage.getItem("announcementData");
+    const storedAnnouncements = announcementData ? JSON.parse(announcementData) : [];
     setAnnouncements(storedAnnouncements);
   }, []);
 

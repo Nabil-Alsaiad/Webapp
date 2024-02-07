@@ -64,7 +64,8 @@ const ReportPage = () => {
 
   useEffect(() => {
     // Load data from local storage when component mounts
-    const storedReports = JSON.parse(localStorage.getItem("reportData")) || [];
+    const reportData = localStorage.getItem("reportData");
+    const storedReports = reportData ? JSON.parse(reportData) : [];
     setReports(storedReports);
   }, []);
 

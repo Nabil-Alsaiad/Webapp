@@ -79,7 +79,7 @@ const MaintenanceSchedule = () => {
         </tbody>
       </table>
       <tr>
-        <td colSpan="6" className="add-row" onClick={handleAddRow}>
+        <td colSpan={6} className="add-row" onClick={handleAddRow}>
           + Add Row
         </td>
       </tr>

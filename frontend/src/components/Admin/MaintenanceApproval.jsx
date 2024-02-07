@@ -20,7 +20,7 @@ const MaintenanceApproval = () => {
         <tbody>
           {maintenanceReportData.length === 0 ? (
             <tr>
-              <td colSpan="5">No maintenance reports received.</td>
+              <td colSpan={5}>No maintenance reports received.</td>
             </tr>
           ) : (
             maintenanceReportData.map((report, index) => (

@@ -9,24 +9,43 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+header {
+  position: fixed; /* This makes the header stick to the viewport */
+  top: 0; /* Align the header with the top of the viewport */
+  left: 0; /* Align the header with the left of the viewport */
+  width: 100%; /* Make the header the same width as the viewport */
+  height: 60px; /* Adjust this to change the height of the header */
+}
+footer {
+  position: fixed; /* This makes the footer stick to the viewport */
+  bottom: 0; /* Align the footer with the bottom of the viewport */
+  left: 0; /* Align the footer with the left of the viewport */
+  width: 100%; /* Make the footer the same width as the viewport */
+  height: 60px; /* Adjust this to change the height of the footer */
+}
 body {
   background: #dfe9f5;
-}
-.container {
-  display: flex;
+  font-family: "Poppins", sans-serif;
+  background-color: #dfe9f5;
 }
 nav {
-  position: relative;
+  background: #fff;
+  position: fixed;
   top: 0;
   bottom: 0;
-  height: 100vh;
   left: 5;
-  background: #fff;
-  width: 280px;
+  width: 220px;
+  height: 100%;
   overflow: hidden;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
-
+.content {
+  margin-left: 220px; /* Adjust this to the width of your nav */
+  margin-top: 60px; /* Adjust this to the height of your header */
+  margin-bottom: 60px; /* Adjust this to the height of your footer */
+  width: calc(100% - 220px); /* Adjust 250px to the width of your nav */
+  height: calc(100% - 120px); /* Adjust 120px to the total height of your header and footer */
+  overflow: auto; /* Add scrollbars if the content is taller than the div */
+}
 .logo {
   text-align: center;
   display: flex;
@@ -55,13 +74,6 @@ a {
 /* Add this style to hide the table container initially */
 .table-container {
   display: none;
-}
-
-/* Content of table-style.css */
-
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #dfe9f5;
 }
 
 .table-container {

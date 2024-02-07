@@ -7,11 +7,12 @@ import VisitorSidebar from "./sidebars/Visitor";
 import TenantSidebar from "./sidebars/Tenant";
 import AgentSidebar from "./sidebars/Agent";
 import AdminSidebar from "./sidebars/Admin";
-import Logout from "./core/Logout";
-import Logo from "./core/Logo";
 import "./Sidebar.css";
 
-function App() {
+/**
+ * @returns {React.JSX.Element}
+ */
+function Sidebar() {
   const savedAccount = localStorage.getItem("loggedInAccount");
   const loggedInAccount = savedAccount ? JSON.parse(savedAccount) : {};
 
@@ -48,21 +49,13 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <>
       <nav>
-        <ul>
-          <li>
-            <Logo />
-          </li>
-          {getSidebar()}
-          <li>
-            <Logout />
-          </li>
-        </ul>
+        <ul>{getSidebar()}</ul>
       </nav>
-      {contentPage}
-    </div>
+      <div className="content">{contentPage}</div>
+    </>
   );
 }
 
-export default App;
+export default Sidebar;

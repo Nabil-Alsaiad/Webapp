@@ -31,11 +31,6 @@ a:active {
   background-color: grey;
 }
 
-.logout {
-  position: absolute;
-  bottom: 0;
-}
-
 /* Add this style to hide the sub-pages container initially */
 .sub-pages-container {
   display: none;

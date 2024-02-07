@@ -77,11 +77,9 @@ function MaintenanceSchedule() {
           ))}
         </tbody>
       </table>
-      <tr>
-        <td colSpan={6} className="add-row" onClick={handleAddRow}>
-          + Add Row
-        </td>
-      </tr>
+      <button className="add-row" onClick={handleAddRow}>
+        + Add Row
+      </button>
       <button onClick={handleSave}>Save</button>
     </div>
   );

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import ReportSubmission from "./ReportSubmission";
 import MaintenanceSchedule from "./MaintenanceSchedule";
 import "./DeveloperSidebar.css";
-import Logout from "../../Logout";
-import SubpagesContainer from "../SubpagesContainer";
-import Logo from "../Logo";
+import Logout from "../core/Logout";
+import SubpagesContainer from "../core/SubpagesContainer";
+import Logo from "../core/Logo";
 
 function DeveloperSidebar() {
   const [subpageIndex, setSubpageIndex] = useState(0);

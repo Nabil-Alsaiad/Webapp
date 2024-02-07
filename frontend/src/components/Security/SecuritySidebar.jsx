@@ -3,8 +3,8 @@ import ReportPage from "./ReportPage";
 import AnnouncementPage from "./AnnouncementPage";
 
 import "./SecuritySidebar.css";
-import Logout from "../../Logout";
-import Logo from "../Logo";
+import Logout from "../core/Logout";
+import Logo from "../core/Logo";
 
 function SecuritySidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

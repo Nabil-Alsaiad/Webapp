@@ -6,8 +6,8 @@ import AnnouncementPage from "./AnnouncementPage";
 import MaintenanceSchedule from "./MaintenanceSchedule";
 import MaintenanceApproval from "./MaintenanceApproval";
 import "./AdminSidebar.css";
-import Logout from "../../Logout";
-import Logo from "../Logo";
+import Logout from "../core/Logout";
+import Logo from "../core/Logo";
 
 function AdminSidebar() {
   const [subPagesVisible, setSubPagesVisible] = useState(false);

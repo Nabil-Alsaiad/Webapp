@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReportSubmission from "../core/ReportSubmission";
 import MaintenanceSchedule from "../core/MaintenanceSchedule";
-import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
-import Logo from "../core/Logo";
+import PropTypes from "prop-types";
 
-function DeveloperSidebar() {
+/**
+ * @param {object} options
+ * @param {Function} options.onPageChosen
+ * @returns {React.JSX.Element}
+ */
+function DeveloperSidebar({ onPageChosen }) {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
+  useEffect(() => {
+    if (subpageIndex === 0) {
+      onPageChosen(<MaintenanceSchedule />);
+    } else if (subpageIndex === 1) {
+      onPageChosen(<ReportSubmission />);
+    }
+  }, [subpageIndex, onPageChosen]);
+
   return (
-    <div className="container">
-      <nav>
-        <ul>
-          <li>
-            <Logo />
-          </li>
-          <li>
-            <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
-          </li>
-          <li>
-            <Logout />
-          </li>
-        </ul>
-      </nav>
-      {subpageIndex === 0 && <MaintenanceSchedule />}
-      {subpageIndex === 1 && <ReportSubmission />}
-    </div>
+    <li>
+      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
+    </li>
   );
 }
+
+DeveloperSidebar.propTypes = {
+  onPageChosen: PropTypes.func.isRequired
+};
 
 export default DeveloperSidebar;

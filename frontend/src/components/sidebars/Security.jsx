@@ -1,57 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
-import Logout from "../core/Logout";
-import Logo from "../core/Logo";
+import PropTypes from "prop-types";
 
-function SecuritySidebar() {
-  const [subPagesVisible, setSubPagesVisible] = useState(false);
-  const [showReportPage, setShowReportPage] = useState(false);
-  const [showAnnouncementPage, setShowAnnouncementPage] = useState(false);
+/**
+ * @param {object} options
+ * @param {Function} options.onPageChosen
+ * @returns {React.JSX.Element}
+ */
+function SecuritySidebar({ onPageChosen }) {
+  const [pageIndex, setPageIndex] = useState(0);
 
-  const toggleReportPage = () => {
-    setShowReportPage(!showReportPage);
-    setSubPagesVisible(false);
-    setShowAnnouncementPage(false);
-  };
-
-  const toggleAnnouncementPage = () => {
-    setShowAnnouncementPage(!showAnnouncementPage);
-    setSubPagesVisible(false);
-    setShowReportPage(false);
-  };
+  useEffect(() => {
+    if (pageIndex === 0) {
+      onPageChosen(<ReportPage />);
+    } else if (pageIndex === 1) {
+      onPageChosen(<AnnouncementPage />);
+    }
+  }, [pageIndex, onPageChosen]);
 
   return (
-    <div className="container">
-      <nav>
-        <ul>
-          <li>
-            <Logo />
-          </li>
-          <li>
-            <a href="#" onClick={toggleReportPage}>
-              <i className="fas fa-flag"></i>
-              <span className="nav-item">Report Page</span>
-            </a>
-          </li>
+    <>
+      <li>
+        <a href="#" onClick={() => setPageIndex(0)}>
+          <i className="fas fa-flag"></i>
+          <span className="nav-item">Report Page</span>
+        </a>
+      </li>
 
-          <li>
-            <a href="#" onClick={toggleAnnouncementPage}>
-              <i className="fas fa-bullhorn"></i>
-              <span className="nav-item">Announcement</span>
-            </a>
-          </li>
-
-          <li>
-            <Logout />
-          </li>
-        </ul>
-      </nav>
-
-      {showReportPage && <ReportPage />}
-      {showAnnouncementPage && <AnnouncementPage />}
-    </div>
+      <li>
+        <a href="#" onClick={() => setPageIndex(1)}>
+          <i className="fas fa-bullhorn"></i>
+          <span className="nav-item">Announcement</span>
+        </a>
+      </li>
+    </>
   );
 }
+
+SecuritySidebar.propTypes = {
+  onPageChosen: PropTypes.func.isRequired
+};
 
 export default SecuritySidebar;

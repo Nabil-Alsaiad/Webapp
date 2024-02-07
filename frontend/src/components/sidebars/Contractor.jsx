@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReportSubmission from "../core/ReportSubmission";
 import MaintenanceSchedule from "../core/MaintenanceSchedule";
-import Logout from "../core/Logout";
 import SubpagesContainer from "../core/SubpagesContainer";
-import Logo from "../core/Logo";
+import PropTypes from "prop-types";
 
-function ContractorSidebar() {
+/**
+ * @param {object} options
+ * @param {Function} options.onPageChosen
+ * @returns {React.JSX.Element}
+ */
+function ContractorSidebar({ onPageChosen }) {
   const [subpageIndex, setSubpageIndex] = useState(0);
 
-  return (
-    <div className="container">
-      <nav>
-        <ul>
-          <li>
-            <Logo />
-          </li>
-          <li>
-            <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
-          </li>
+  useEffect(() => {
+    if (subpageIndex === 0) {
+      onPageChosen(<MaintenanceSchedule />);
+    } else if (subpageIndex === 1) {
+      onPageChosen(<ReportSubmission />);
+    }
+  }, [subpageIndex, onPageChosen]);
 
-          <li>
-            <Logout />
-          </li>
-        </ul>
-      </nav>
-      {subpageIndex === 0 && <MaintenanceSchedule />}
-      {subpageIndex === 1 && <ReportSubmission />}
-    </div>
+  return (
+    <li>
+      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
+    </li>
   );
 }
+
+ContractorSidebar.propTypes = {
+  onPageChosen: PropTypes.func.isRequired
+};
 
 export default ContractorSidebar;

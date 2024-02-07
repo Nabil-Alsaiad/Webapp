@@ -1,170 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RegisterForm from "../core/RegisterForm";
 import ViewUser from "../core/ViewUser";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
 import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import MaintenanceApproval from "../core/MaintenanceApproval";
-import Logout from "../core/Logout";
-import Logo from "../core/Logo";
+import PropTypes from "prop-types";
+import SubpagesContainer from "../core/SubpagesContainer";
 
-function AdminSidebar() {
-  const [subPagesVisible, setSubPagesVisible] = useState(false);
-  const [subMaintenancePagesVisible, setSubMaintenancePagesVisible] = useState(false);
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-  const [showViewUser, setShowViewUser] = useState(false);
-  const [showReportPage, setShowReportPage] = useState(false);
-  const [showAnnouncementPage, setShowAnnouncementPage] = useState(false);
-  const [showMaintenanceSchedule, setShowMaintenanceSchedule] = useState(false);
-  const [showMaintenanceApproval, setShowMaintenanceApproval] = useState(false);
+/**
+ * @param {object} options
+ * @param {Function} options.onPageChosen
+ * @returns {React.JSX.Element}
+ */
+function AdminSidebar({ onPageChosen }) {
+  const [pageIndex, setPageIndex] = useState(0);
 
-  const toggleSubPages = () => {
-    setSubPagesVisible(!subPagesVisible);
-    setSubMaintenancePagesVisible(false);
-    setShowRegisterForm(false);
-    setShowViewUser(false);
-    setShowReportPage(false);
-    setShowAnnouncementPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
+  useEffect(() => {
+    if (pageIndex === 0) {
+      onPageChosen(<RegisterForm extra={true} />);
+    } else if (pageIndex === 1) {
+      onPageChosen(<ViewUser />);
+    } else if (pageIndex === 2) {
+      onPageChosen(<ReportPage />);
+    } else if (pageIndex === 3) {
+      onPageChosen(<AnnouncementPage />);
+    } else if (pageIndex === 4) {
+      onPageChosen(<MaintenanceSchedule />);
+    } else if (pageIndex === 5) {
+      onPageChosen(<MaintenanceApproval />);
+    }
+  }, [pageIndex, onPageChosen]);
+
+  const handleClick1 = (/** @type {number} */ i) => {
+    setPageIndex(i);
   };
-
-  const toggleSubMaintenancePages = () => {
-    setSubMaintenancePagesVisible(!subMaintenancePagesVisible);
-    setSubPagesVisible(false);
-    setShowRegisterForm(false);
-    setShowViewUser(false);
-    setShowReportPage(false);
-    setShowAnnouncementPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
-  };
-
-  const toggleRegisterForm = () => {
-    setShowRegisterForm(!showRegisterForm);
-    setShowViewUser(false);
-    setShowReportPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
-  };
-
-  const toggleViewUser = () => {
-    setShowViewUser(!showViewUser);
-    setShowRegisterForm(false);
-    setShowReportPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
-  };
-
-  const toggleReportPage = () => {
-    setShowReportPage(!showReportPage);
-    setSubPagesVisible(false);
-    setSubMaintenancePagesVisible(false);
-    setShowRegisterForm(false);
-    setShowViewUser(false);
-    setShowAnnouncementPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
-  };
-
-  const toggleAnnouncementPage = () => {
-    setShowAnnouncementPage(!showAnnouncementPage);
-    setSubPagesVisible(false);
-    setSubMaintenancePagesVisible(false);
-    setShowRegisterForm(false);
-    setShowViewUser(false);
-    setShowReportPage(false);
-    setShowMaintenanceSchedule(false);
-    setShowMaintenanceApproval(false);
-  };
-
-  const toggleMaintenanceSchedule = () => {
-    setShowMaintenanceSchedule(!showMaintenanceSchedule);
-    setShowMaintenanceApproval(false);
-    setSubPagesVisible(false);
-    setShowRegisterForm(false);
-    setShowAnnouncementPage(false);
-    setShowViewUser(false);
-    setShowReportPage(false);
-  };
-
-  const toggleMaintenanceApproval = () => {
-    setShowMaintenanceApproval(!showMaintenanceApproval);
-    setShowMaintenanceSchedule(false);
-    setSubPagesVisible(false);
-    setShowRegisterForm(false);
-    setShowAnnouncementPage(false);
-    setShowViewUser(false);
-    setShowReportPage(false);
+  const handleClick2 = (/** @type {number} */ i) => {
+    setPageIndex(i + 4);
   };
 
   return (
-    <div className="container">
-      <nav>
-        <ul>
-          <li>
-            <Logo />
-          </li>
-
-          <li>
-            <a href="#" className="profile-button" onClick={toggleSubPages}>
-              <i className="fas fa-user"></i>
-              <span className="nav-item">Profile</span>
-            </a>
-          </li>
-
-          <div className={`sub-pages-container ${subPagesVisible ? "visible" : ""}`}>
-            <a href="#" id="registerUserButton" className="sub-page-button" onClick={toggleRegisterForm}>
-              Register User
-            </a>
-            <a href="#" id="viewUserButton" className="sub-page-button" onClick={toggleViewUser}>
-              View User
-            </a>
-          </div>
-
-          <li>
-            <a href="#" onClick={toggleReportPage}>
-              <i className="fas fa-flag"></i>
-              <span className="nav-item">Report Page</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" onClick={toggleAnnouncementPage}>
-              <i className="fas fa-bullhorn"></i>
-              <span className="nav-item">Announcement</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" className="maintenance-button" onClick={toggleSubMaintenancePages}>
-              <i className="fas fa-wrench"></i>
-              <span className="nav-item">Maintenance</span>
-            </a>
-          </li>
-
-          <div className={`sub-pages-container ${subMaintenancePagesVisible ? "visible" : ""}`}>
-            <a href="#" id="maintenanceScheduleButton" className="sub-page-button" onClick={toggleMaintenanceSchedule}>
-              Maintenance Schedule
-            </a>
-            <a href="#" id="maintenanceApprovalButton" className="sub-page-button" onClick={toggleMaintenanceApproval}>
-              Maintenance Approval
-            </a>
-          </div>
-
-          <li>
-            <Logout />
-          </li>
-        </ul>
-      </nav>
-      {showRegisterForm && <RegisterForm extra={true} />}
-      {showViewUser && <ViewUser />}
-      {showReportPage && <ReportPage />}
-      {showAnnouncementPage && <AnnouncementPage />}
-      {showMaintenanceSchedule && <MaintenanceSchedule />}
-      {showMaintenanceApproval && <MaintenanceApproval />}
-    </div>
+    <>
+      <li>
+        <SubpagesContainer onIndexChange={handleClick1} name={"Profile"} subpagesNames={["Register User", "View User"]} />
+      </li>
+      <li>
+        <a onClick={() => setPageIndex(2)}>
+          <i className="fas fa-flag"></i>
+          <span className="nav-item">Report Page</span>
+        </a>
+      </li>
+      <li>
+        <a onClick={() => setPageIndex(3)}>
+          <i className="fas fa-bullhorn"></i>
+          <span className="nav-item">Announcement</span>
+        </a>
+      </li>
+      <li>
+        <SubpagesContainer onIndexChange={handleClick2} name={"Maintenance"} subpagesNames={["Maintenance Schedule", "Maintenance Approval"]} />
+      </li>
+    </>
   );
 }
+
+AdminSidebar.propTypes = {
+  onPageChosen: PropTypes.func.isRequired
+};
 
 export default AdminSidebar;

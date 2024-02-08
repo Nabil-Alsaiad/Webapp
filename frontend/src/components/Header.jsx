@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "./core/Logo";
+import Logout from "./core/Logout";
 
 /**
  * @returns {React.JSX.Element}
@@ -7,7 +8,10 @@ import Logo from "./core/Logo";
 function Header() {
   return (
     <header>
-      <Logo />
+      <>
+        <Logo />
+        <Logout />
+      </>
     </header>
   );
 }

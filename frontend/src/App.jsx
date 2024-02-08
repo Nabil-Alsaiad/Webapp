@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 // import Register from "./Register";
 import Login from "./Login";
 import "./App.css";
@@ -19,7 +18,6 @@ function App() {
             <>
               <Header />
               <Sidebar />
-              <Footer />
             </>
           }
         />

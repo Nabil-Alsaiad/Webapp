@@ -9,58 +9,43 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-header {
-  position: fixed; /* This makes the header stick to the viewport */
-  top: 0; /* Align the header with the top of the viewport */
-  left: 0; /* Align the header with the left of the viewport */
-  width: 100%; /* Make the header the same width as the viewport */
-  height: 60px; /* Adjust this to change the height of the header */
-}
-footer {
-  position: fixed; /* This makes the footer stick to the viewport */
-  bottom: 0; /* Align the footer with the bottom of the viewport */
-  left: 0; /* Align the footer with the left of the viewport */
-  width: 100%; /* Make the footer the same width as the viewport */
-  height: 60px; /* Adjust this to change the height of the footer */
-}
 body {
   background: #dfe9f5;
   font-family: "Poppins", sans-serif;
   background-color: #dfe9f5;
 }
+header {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 220px;
+  width: calc(100% - 220px);
+  height: 60px;
+}
+
 nav {
   background: #fff;
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 5;
+  left: 0;
   width: 220px;
   height: 100%;
   overflow: hidden;
 }
+
 .content {
-  margin-left: 220px; /* Adjust this to the width of your nav */
-  margin-top: 60px; /* Adjust this to the height of your header */
-  margin-bottom: 60px; /* Adjust this to the height of your footer */
-  width: calc(100% - 220px); /* Adjust 250px to the width of your nav */
-  height: calc(100% - 120px); /* Adjust 120px to the total height of your header and footer */
-  overflow: auto; /* Add scrollbars if the content is taller than the div */
-}
-.logo {
-  text-align: center;
+  top: 60px;
+  left: 220px;
+  margin-left: 220px;
+  margin-top: 60px;
+  width: calc(100% - 220px);
+  height: calc(100% - 60px);
+  overflow: auto;
   display: flex;
-  margin: 10px 0 0 10px;
-}
-.logo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-.logo span {
-  font-weight: bold;
-  padding-left: 5px;
-  font-size: 11px;
-  text-transform: uppercase;
+  justify-content: flex-end;
+  align-items: right;
 }
 a {
   position: relative;

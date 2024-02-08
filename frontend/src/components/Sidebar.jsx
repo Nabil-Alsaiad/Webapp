@@ -1,12 +1,4 @@
-import React, { useState } from "react";
-import ContractorSidebar from "./sidebars/Contractor";
-import DeveloperSidebar from "./sidebars/Developer";
-import DeliverySidebar from "./sidebars/Delivery";
-import SecuritySidebar from "./sidebars/Security";
-import VisitorSidebar from "./sidebars/Visitor";
-import TenantSidebar from "./sidebars/Tenant";
-import AgentSidebar from "./sidebars/Agent";
-import AdminSidebar from "./sidebars/Admin";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 
 /**
@@ -14,44 +6,35 @@ import "./Sidebar.css";
  */
 function Sidebar() {
   const savedAccount = localStorage.getItem("loggedInAccount");
-  const loggedInAccount = savedAccount ? JSON.parse(savedAccount) : {};
+  /** @type {{email?: string, userType?: string}} */
+  const { userType } = savedAccount ? JSON.parse(savedAccount) : {};
 
   const [contentPage, setContentPage] = useState();
+  const [SidebarComponent, setSidebarComponent] = useState(null);
 
-  const getSidebar = () => {
-    switch (loggedInAccount.userType) {
-      case "visitor":
-        return <VisitorSidebar onPageChosen={setContentPage} />;
-
-      case "admin":
-        return <AdminSidebar onPageChosen={setContentPage} />;
-
-      case "developer":
-        return <DeveloperSidebar onPageChosen={setContentPage} />;
-
-      case "delivery":
-        return <DeliverySidebar onPageChosen={setContentPage} />;
-
-      case "contractor":
-        return <ContractorSidebar onPageChosen={setContentPage} />;
-
-      case "agent":
-        return <AgentSidebar onPageChosen={setContentPage} />;
-
-      case "security":
-        return <SecuritySidebar onPageChosen={setContentPage} />;
-
-      case "tenant":
-        return <TenantSidebar onPageChosen={setContentPage} />;
+  useEffect(() => {
+    if (userType) {
+      const name = userType.charAt(0).toUpperCase() + userType.slice(1).toLowerCase();
+      import(`./sidebars/${name}.jsx`)
+        .then((module) => {
+          setSidebarComponent(() => module.default);
+        })
+        .catch((error) => {
+          throw new Error(`Invalid user type: ${error}`);
+        });
     }
+  }, [userType]);
 
-    throw new Error("Invalid user type");
-  };
+  if (!SidebarComponent) {
+    return <></>; // Or a loading spinner, etc.
+  }
 
   return (
     <>
       <nav>
-        <ul>{getSidebar()}</ul>
+        <ul>
+          <SidebarComponent onPageChosen={setContentPage} />
+        </ul>
       </nav>
       <div className="content">{contentPage}</div>
     </>

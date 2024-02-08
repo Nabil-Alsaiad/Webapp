@@ -1,11 +1,10 @@
 // import { hash, compare } from "bcrypt";
-import { Router } from "express";
-import db from "./db.js";
-import { convertAccountType } from "./accTypes.js";
+import db from "../db.js";
+import { convertAccountType } from "../accTypes.js";
 
 /**
- * @param {import('./types.d.ts').Email} email
- * @param {import('./types.d.ts').AccountTypes} [accountType]
+ * @param {import('../types').Email} email
+ * @param {import('../types').AccountTypes} [accountType]
  * @returns {Promise<boolean>}
  */
 async function checkAccountExists(email, accountType) {
@@ -25,7 +24,7 @@ async function checkAccountExists(email, accountType) {
 
   try {
     const data = await db.query(sql, values);
-    /** @type {import('./types.d.ts').Email} */
+    /** @type {import('../types').Email} */
     const storedEmail = data[0][0].email;
     let exists = storedEmail === email;
 
@@ -40,24 +39,13 @@ async function checkAccountExists(email, accountType) {
     return false;
   }
 }
-
-export const deleteRouter = Router().post("/delete", async (req, res) => {
-  const { accType, email, password } = req.body;
-  try {
-    await deleteAcc(accType, email, password);
-    res.status(200).json({ message: "Deleted" });
-  } catch (err) {
-    res.status(500).json({ error: err.toString() });
-  }
-});
-
 /**
- * @param {import('./types').AccountTypes} accType
- * @param {import('./types').Email} email
+ * @param {import('../types').AccountTypes} accType
+ * @param {import('../types').Email} email
  * @param {string} password
  * @returns {Promise<void>}
  */
-async function deleteAcc(accType, email, password) {
+export async function deleteAcc(accType, email, password) {
   const exists = await checkAccountExists(email);
   if (!exists) {
     throw new Error("There is no account with that email");
@@ -98,23 +86,13 @@ async function deleteAcc(accType, email, password) {
   await db.query(sql2, values2);
 }
 
-export const registerRouter = Router().post("/register", async (req, res) => {
-  const { accType, email, password } = req.body;
-  try {
-    await register(accType, email, password);
-    res.status(200).json({ message: "Registered" });
-  } catch (err) {
-    res.status(500).json({ error: err.toString() });
-  }
-});
-
 /**
- * @param {import('./types').AccountTypes} accType
- * @param {import('./types').Email} email
+ * @param {import('../types').AccountTypes} accType
+ * @param {import('../types').Email} email
  * @param {string} password
  * @returns {Promise<void>}
  */
-async function register(accType, email, password) {
+export async function register(accType, email, password) {
   const exists = await checkAccountExists(email);
   if (exists) {
     throw new Error("The email already exists");
@@ -134,23 +112,13 @@ async function register(accType, email, password) {
   await db.query(sql, values);
 }
 
-export const loginRouter = Router().post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const loggedIn = await login(email, password);
-    res.status(200).json(loggedIn);
-  } catch (err) {
-    res.status(500).json({ error: err.toString() });
-  }
-});
-
 /**
  * Logs in the account.
- * @param {import('./types').Email} email
+ * @param {import('../types').Email} email
  * @param {string} password
  * @returns {Promise<{} | {email:string, accType: string}>} - True if the login is successful, false otherwise.
  */
-async function login(email, password) {
+export async function login(email, password) {
   const exists = await checkAccountExists(email);
   if (!exists) {
     throw new Error("There is no account with that email");

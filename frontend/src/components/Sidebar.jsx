@@ -26,7 +26,7 @@ function Sidebar() {
   }, [userType]);
 
   if (!SidebarComponent) {
-    return <></>; // Or a loading spinner, etc.
+    return <></>;
   }
 
   return (

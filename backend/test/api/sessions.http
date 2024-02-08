@@ -1,10 +1,30 @@
+### Delete an existing account
+POST {{hostname}}/delete
+Content-Type: application/json
+
+{
+  "accType": "visitor",
+  "email": "yes@test.pro",
+  "password": "1234"
+}
+
+### Register a new account
+POST {{hostname}}/register
+Content-Type: application/json
+
+{
+  "accType": "visitor",
+  "email": "yes@test.pro",
+  "password": "1234"
+}
+
 ### Login with correct values
 POST {{hostname}}/login
 Content-Type: application/json
 
 {
-  "email": "one@email.com",
-  "password": "601234567890"
+  "email": "yes@test.pro",
+  "password": "1234"
 }
 
 ### Login with non existing email
@@ -12,7 +32,7 @@ POST {{hostname}}/login
 Content-Type: application/json
 
 {
-  "email": "z@email.com",
+  "email": "z@z.z",
 }
 
 ### Login with wrong password
@@ -20,6 +40,6 @@ POST {{hostname}}/login
 Content-Type: application/json
 
 {
-  "email": "one@email.com",
+  "email": "yes@test.pro",
   "password": "z"
 }

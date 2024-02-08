@@ -1,4 +1,4 @@
-export declare type AccountTypes = "dev" | "admin" | "tenant" | "security" | "contractor";
+export declare type AccountTypes = "visitor" | "delivery" | "develoepr" | "admin" | "tenant" | "security" | "contractor";
 
 export declare type Email = `${string}@${string}.${string}`;
 

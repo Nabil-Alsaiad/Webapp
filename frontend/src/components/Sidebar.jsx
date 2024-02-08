@@ -6,15 +6,15 @@ import "./Sidebar.css";
  */
 function Sidebar() {
   const savedAccount = localStorage.getItem("loggedInAccount");
-  /** @type {{email?: string, userType?: string}} */
-  const { userType } = savedAccount ? JSON.parse(savedAccount) : {};
+  /** @type {{email?: string, accountType?: string}} */
+  const { accountType } = savedAccount ? JSON.parse(savedAccount) : {};
 
   const [contentPage, setContentPage] = useState();
   const [SidebarComponent, setSidebarComponent] = useState(null);
 
   useEffect(() => {
-    if (userType) {
-      const name = userType.charAt(0).toUpperCase() + userType.slice(1).toLowerCase();
+    if (accountType) {
+      const name = accountType.charAt(0).toUpperCase() + accountType.slice(1).toLowerCase();
       import(`./sidebars/${name}.jsx`)
         .then((module) => {
           setSidebarComponent(() => module.default);
@@ -23,7 +23,7 @@ function Sidebar() {
           throw new Error(`Invalid user type: ${error}`);
         });
     }
-  }, [userType]);
+  }, [accountType]);
 
   if (!SidebarComponent) {
     return <></>;

@@ -1,7 +1,8 @@
 import express from "express";
-import { getVisitor, getVisitors, registerVisitor } from "./func/visitor.js";
-import { loginRouter, registerRouter } from "./session.js";
 import cors from "cors";
+import { getVisitor, getVisitors, registerVisitor } from "./func/visitor.js";
+import { deleteRouter, loginRouter, registerRouter } from "./session.js";
+import { fetchAccountTypes } from "./accTypes.js";
 
 const app = express();
 app.use(cors());
@@ -32,12 +33,14 @@ app.post("/visitor", async (req, res) => {
 
 //#region Session
 
-app.use("/login", loginRouter);
-app.use("/register", registerRouter);
+app.use(loginRouter);
+app.use(registerRouter);
+app.use(deleteRouter);
 
 //#endregion
 
 const port = 8888;
 app.listen(port, () => {
+  fetchAccountTypes();
   console.log(`App listening at http://localhost:${port}`);
 });

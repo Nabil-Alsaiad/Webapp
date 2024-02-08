@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Register() {
+  const [accType, setAccType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!accType || !email || !password) {
       return;
     }
 
@@ -27,43 +28,44 @@ function Login() {
       return;
     }
 
-    let accountType;
-
     try {
-      const res = await fetch("http://localhost:8888/login", {
+      const res = await fetch("http://localhost:8888/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          accType,
           email,
           password
         })
       });
-      const { email: loggedInEmail, accType: loggedInAccType, error } = await res.json();
+      const { error } = await res.json();
       if (error) {
         console.error(error);
         return;
       }
-
-      if (!loggedInEmail || !loggedInAccType) {
-        return;
-      }
-
-      accountType = loggedInAccType;
     } catch (err) {
       console.error(err);
       return;
     }
 
-    localStorage.setItem("loggedInAccount", JSON.stringify({ email, accountType }));
-    navigate("/");
+    navigate("/login");
   };
 
   return (
     <div>
       <h1>Visitor Management System</h1>
       <form onSubmit={handleSubmit}>
+        <label>
+          Account Type:
+          <select value={accType} onChange={(e) => setAccType(e.target.value)}>
+            <option value="">Select Account Type</option>
+            <option value="visitor">Visitor</option>
+            <option value="delivery">Delivery</option>
+          </select>
+        </label>
+        <br />
         <label>
           Email:
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -80,4 +82,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

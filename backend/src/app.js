@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { getVisitor, getVisitors, createVisitor } from "./func/account.js";
+import { getAccounts, getAccount, updateAccount } from "./func/account.js";
 import { deleteAcc, login, register } from "./func/session.js";
 import { fetchAccountTypes } from "./accTypes.js";
 
@@ -8,28 +8,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//#region Visitor
+//#region Account
 
 app.get("/accounts", async (req, res) => {
   try {
-    res.status(200).send(await getVisitors());
+    res.status(200).send(await getAccounts());
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });
 
-app.get("/account", async (req, res) => {
+app.get("/account/:id", async (req, res) => {
   try {
-    res.status(200).json(await getVisitor(req.body));
+    const id = Number.parseInt(req.params.id);
+    res.status(200).json(await getAccount({ id }));
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });
 
 app.put("/account", async (req, res) => {
   try {
-    res.status(200).json(await createVisitor(req.body));
+    await updateAccount(req.body);
+    res.status(200).json({ message: "Updated" });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });

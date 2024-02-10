@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./AccountInformation.css";
 
@@ -12,74 +13,61 @@ AccountInformation.propTypes = {
  * @returns {React.JSX.Element}
  */
 function AccountInformation({ extra }) {
-  useEffect(() => {
-    const loggedInAccount = localStorage.getItem("loggedInAccount");
-    const { accType, email } = loggedInAccount ? JSON.parse(loggedInAccount) : { accType: "", email: "" };
+  const loggedInAccount = localStorage.getItem("loggedInAccount");
+  let { id } = loggedInAccount ? JSON.parse(loggedInAccount) : { id: -1 };
 
-    fetch("http://localhost:8888/account", {
+  useEffect(() => {
+    fetch(`http://localhost:8888/account/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        accType,
-        email
-      })
+      }
     })
       .then((res) => res.json())
-      .then(({ email, password, name, phone, licenceId, vehiclePlateNumber, companyName }) => {
-        // @ts-expect-error
-        document.getElementById("name").value = name;
-        // @ts-expect-error
-        document.getElementById("contactNumber").value = phone;
-        // @ts-expect-error
-        document.getElementById("email").value = email;
-        // @ts-expect-error
-        document.getElementById("password").value = password;
+      .then((data) => {
+        setValue("email", data.email);
+        setValue("password", data.password);
+        setValue("name", data.name);
+        setValue("phone", data.phone);
+
+        setValue("register-date", new Date(data.register_date).toString());
 
         if (extra) {
-          // @ts-expect-error
-          document.getElementById("licenceId").value = licenceId;
-          // @ts-expect-error
-          document.getElementById("vehiclePlateNumber").value = vehiclePlateNumber;
-          // @ts-expect-error
-          document.getElementById("companyName").value = companyName;
+          setValue("licenseId", data.license_id);
+          setValue("companyName", data.company_name);
+          setValue("vehiclePlateNumber", data.vehicle_plate);
         }
       });
-  }, [extra]);
+  }, [extra, id]);
 
   function submitForm() {
     const accInfo = {
-      // @ts-expect-error
-      name: document.getElementById("name")?.value,
-      // @ts-expect-error
-      contactNumber: document.getElementById("contactNumber")?.value,
-      // @ts-expect-error
-      email: document.getElementById("email")?.value,
-      // @ts-expect-error
-      password: document.getElementById("password")?.value
+      id: id,
+      name: getValue("name"),
+      phone: getValue("phone").trim().replace(/-/g, ""),
+      email: getValue("email"),
+      password: getValue("password")
     };
 
     if (extra) {
-      // @ts-expect-error
-      accInfo.licenceId = document.getElementById("licenceId")?.value;
-      // @ts-expect-error
-      accInfo.carPlateNumber = document.getElementById("vehiclePlateNumber")?.value;
-      // @ts-expect-error
-      accInfo.companyName = document.getElementById("companyName")?.value;
+      accInfo.license_id = getValue("license-id");
+      accInfo.vehicle_plate = getValue("vehicle-plate-number");
+      accInfo.company_name = getValue("company-name");
     }
 
     fetch("http://localhost:8888/account", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(accInfo)
     }).then((res) => {
-      if (res.status > 200 && res.status < 300) {
-        alert("Form submitted!");
-      } else if (res.status > 400 && res.status < 600) {
-        alert("Error submitting form");
+      if (res.status >= 200 && res.status < 300) {
+        alert("Account Updated!");
+      } else if (res.status >= 400 && res.status < 600) {
+        res.json().then((data) => {
+          alert("Error: " + data?.error);
+        });
       }
     });
   }
@@ -87,12 +75,12 @@ function AccountInformation({ extra }) {
   return (
     <div>
       <h1>Account Information</h1>
-      <form id="AccountInformation">
+      <form id="account-information">
         <label htmlFor="name">Name</label>
         <input type="text" id="name" name="name" required />
 
-        <label htmlFor="contactNumber">Contact Number</label>
-        <input type="text" id="contactNumber" name="contactNumber" required />
+        <label htmlFor="phone">Contact Number</label>
+        <input type="text" id="phone" name="phone" required />
 
         <label htmlFor="email">Email</label>
         <input type="email" id="email" name="email" required />
@@ -102,16 +90,19 @@ function AccountInformation({ extra }) {
 
         {extra && (
           <>
-            <label htmlFor="licenseId">License ID</label>
-            <input type="text" id="licenseId" name="licenseId" required />
+            <label htmlFor="license-id">License ID</label>
+            <input type="text" id="license-id" name="license-id" required />
 
-            <label htmlFor="vehiclePlateNumber">Vehicle Plate Number</label>
-            <input type="text" id="vehiclePlateNumber" name="vehiclePlateNumber" required />
+            <label htmlFor="vehicle-plate-number">Vehicle Plate Number</label>
+            <input type="text" id="vehicle-plate-number" name="vehicle-plate-number" required />
 
-            <label htmlFor="companyName">Company Name</label>
-            <input type="text" id="companyName" name="companyName" required />
+            <label htmlFor="company-name">Company Name</label>
+            <input type="text" id="company-name" name="company-name" required />
           </>
         )}
+
+        <label htmlFor="register-date">Register Date</label>
+        <input type="register-date" id="register-date" name="register-date" required />
 
         <button type="button" onClick={submitForm}>
           Submit
@@ -119,6 +110,30 @@ function AccountInformation({ extra }) {
       </form>
     </div>
   );
+}
+
+/**
+ * @param {string} id
+ * @param {string | undefined} value
+ */
+function setValue(id, value) {
+  /** @type {HTMLInputElement | HTMLTextAreaElement} */
+  // @ts-expect-error
+  const el = document.getElementById(id);
+  if (el) {
+    el.value = value || "";
+  }
+}
+
+/**
+ * @param {string} id
+ * @returns {string}
+ */
+function getValue(id) {
+  /** @type {HTMLInputElement | HTMLTextAreaElement} */
+  // @ts-expect-error
+  const el = document.getElementById(id);
+  return el.value || "";
 }
 
 export default AccountInformation;

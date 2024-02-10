@@ -1,35 +1,43 @@
 import db from "../db.js";
 
 /**
- * @param {object} data
- * @param {string} data.name
- * @param {import('../types.js').Phone} data.phone
- * @returns {Promise<object | null>}
+ * @param {import('../types.d.ts').FullAccount} data
+ * @returns {Promise<void>}
  */
-async function createOne(data) {
-  const { name, phone } = data;
+export async function updateAccount(data) {
+  const toUpdate = [];
+  const values = [];
+
+  const keys = ["accType", "email", "password", "name", "phone"];
+  keys.forEach((key) => {
+    if (data[key]) {
+      toUpdate.push(`${key} = ?`);
+      values.push(data[key]);
+    }
+  });
+
+  if (toUpdate.length === 0) {
+    throw new Error("No data to update");
+  }
 
   const sql = `
-  INSERT INTO visitors (name, phone)
-  VALUES (?, ?)
+    UPDATE accounts
+    SET ${toUpdate.join(", ")}
+    WHERE id = ?
   `;
 
-  await db.query(sql, [name, phone]);
-  return await getOne(data);
+  await db.query(sql, [...values, data.id]);
 }
 
 /**
- * @param {object} data
- * @param {import('../types.js').ID} [data.id]
- * @param {string} [data.name]
- * @param {import('../types.js').Phone} [data.phone]
- * @returns {Promise<object | null>}
+ * @param {Partial<import('../types.d.ts').Account>} data
+ * @returns {Promise<import('../types').Account | null>}
  */
-async function getOne(data) {
+export async function getAccount(data) {
   const conditions = [];
   const values = [];
 
-  const keys = ["id", "name", "phone"];
+  const keys = ["id", "accType", "email", "name", "phone"];
   keys.forEach((key) => {
     if (data[key]) {
       conditions.push(`${key} = ?`);
@@ -38,26 +46,22 @@ async function getOne(data) {
   });
 
   if (conditions.length === 0) {
-    return null;
+    throw new Error("No data to get");
   }
 
-  const sql = `SELECT * FROM visitors WHERE ${conditions.join(" AND ")}`;
+  const sql = `SELECT * FROM accounts WHERE ${conditions.join(" AND ")}`;
 
   const [rows] = await db.query(sql, values);
   return rows[0];
 }
 
 /**
- * @returns {Promise<object[] | null>}
+ * @returns {Promise<import('../types').Account[] | null>}
  */
-async function getMany() {
-  const sql = "SELECT * FROM visitors";
+export async function getAccounts() {
+  const sql = "SELECT * FROM accounts";
 
   const [rows] = await db.query(sql);
   // @ts-expect-error
   return rows;
 }
-
-export const createVisitor = createOne;
-export const getVisitor = getOne;
-export const getVisitors = getMany;

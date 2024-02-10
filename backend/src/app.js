@@ -48,7 +48,8 @@ app.post("/delete", async (req, res) => {
     await deleteAcc(req.body);
     res.status(200).json({ message: "Deleted" });
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    console.error(err);
+    res.status(500).json({ error: err.stack || err.toString() });
   }
 });
 
@@ -57,6 +58,7 @@ app.post("/register", async (req, res) => {
     await register(req.body);
     res.status(200).json({ message: "Registered" });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });

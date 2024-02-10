@@ -1,13 +1,12 @@
-// import { hash, compare } from "bcrypt";
 import db from "../db.js";
 import { convertAccountType } from "../accTypes.js";
 
 /**
  * @param {import('../types').Email} email
- * @param {import('../types').AccountTypes} [accountType]
+ * @param {import('../types').AccountTypes} [accType]
  * @returns {Promise<boolean>}
  */
-async function checkAccountExists(email, accountType) {
+async function checkAccountExists(email, accType) {
   let sql = `
       SELECT * FROM accounts
       WHERE email = ?
@@ -16,9 +15,9 @@ async function checkAccountExists(email, accountType) {
   const values = [email];
 
   let accountTypeId;
-  if (accountType) {
+  if (accType) {
     sql += " AND type_id = ?";
-    accountTypeId = convertAccountType(accountType);
+    accountTypeId = convertAccountType(accType);
     values.push(accountTypeId);
   }
 
@@ -40,13 +39,10 @@ async function checkAccountExists(email, accountType) {
   }
 }
 /**
- * @param {object} data
- * @param {import('../types').AccountTypes} data.accType
- * @param {import('../types').Email} data.email
- * @param {string} data.password
+ * @param {import('../types').Account} data
  * @returns {Promise<void>}
  */
-export async function deleteAcc({ accType, email, password }) {
+export async function deleteAcc({ id, accType, email }) {
   const exists = await checkAccountExists(email);
   if (!exists) {
     throw new Error("There is no account with that email");
@@ -54,44 +50,18 @@ export async function deleteAcc({ accType, email, password }) {
 
   const typeId = convertAccountType(accType);
 
-  const sql = `
-  SELECT * FROM accounts
-  WHERE type_id = ?
-  AND email = ?
-  `;
-  const values = [typeId, email];
-
-  const [rows] = await db.query(sql, values);
-  /** @type {object} */
-  const data = rows[0];
-
-  /** @type {string} */
-  const hashedPassword = data.password;
-  if (!hashedPassword) {
-    throw new Error("Failed to retrieve the password");
-  }
-
-  // if (!(await compare(password, hashedPassword))) {
-  if (password !== hashedPassword) {
-    throw new Error("Could not delete the account. The password is incorrect");
-  }
-
-  // await delete from database
   const sql2 = `
     DELETE FROM accounts
-    WHERE type_id = ?
+    WHERE id = ?
+    AND type_id = ?
     AND email = ?
-    AND password = ?
   `;
-  const values2 = [typeId, email, hashedPassword];
+  const values2 = [id, typeId, email];
   await db.query(sql2, values2);
 }
 
 /**
- * @param {object} data
- * @param {import('../types').AccountTypes} data.accType
- * @param {import('../types').Email} data.email
- * @param {string} data.password
+ * @param {import('../types').Account} data
  * @returns {Promise<void>}
  */
 export async function register({ accType, email, password }) {
@@ -102,23 +72,17 @@ export async function register({ accType, email, password }) {
 
   const typeId = convertAccountType(accType);
 
-  // const hashedPassword = await hash(password, 10);
-  const hashedPassword = password;
-
   const sql = `
       INSERT INTO accounts (type_id, email, password)
       VALUES (?, ?, ?)
       `;
-  const values = [typeId, email, hashedPassword];
-
+  const values = [typeId, email, password];
   await db.query(sql, values);
 }
 
 /**
- * @param {object} data
- * @param {import('../types').Email} data.email
- * @param {string} data.password
- * @returns {Promise<{} | {email:string, accType: string}>} - True if the login is successful, false otherwise.
+ * @param {import('../types').Account} data
+ * @returns {Promise<{} | import('../types').Account>} - True if the login is successful, false otherwise.
  */
 export async function login({ email, password }) {
   const exists = await checkAccountExists(email);
@@ -127,37 +91,23 @@ export async function login({ email, password }) {
   }
 
   const sql = `
-  SELECT * FROM accounts
-  WHERE email = ?
+    SELECT * FROM accounts
+    WHERE email = ?
+    AND password = ?
   `;
-  const values = [email];
+  const values = [email, password];
 
   const [rows] = await db.query(sql, values);
 
-  let loggedIn = {};
-
   // @ts-expect-error
   if (rows.length === 0) {
-    return loggedIn;
+    return {};
   }
 
-  // @ts-expect-error
-  rows.forEach((r) => {
-    /** @type {string} */
-    const hashedPassword = r.password;
-    if (!hashedPassword) {
-      throw new Error("Failed to retrieve the password");
-    }
-
-    // if (await compare(password, hashedPassword)) {
-    if (password === hashedPassword) {
-      loggedIn = {
-        email: r.email,
-        accType: convertAccountType(r.type_id)
-      };
-      return; // Stop the loop
-    }
-  });
-
-  return loggedIn;
+  const r = rows[0];
+  return {
+    id: r.id,
+    email: r.email,
+    accType: convertAccountType(r.type_id)
+  };
 }

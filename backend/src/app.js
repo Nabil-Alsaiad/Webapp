@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { getVisitor, getVisitors, createVisitor } from "./func/visitor.js";
+import { getVisitor, getVisitors, createVisitor } from "./func/account.js";
 import { deleteAcc, login, register } from "./func/session.js";
 import { fetchAccountTypes } from "./accTypes.js";
 
@@ -10,15 +10,15 @@ app.use(express.json());
 
 //#region Visitor
 
-app.get("/visitors", async (req, res) => {
+app.get("/accounts", async (req, res) => {
   try {
-  res.status(200).send(await getVisitors());
+    res.status(200).send(await getVisitors());
   } catch (err) {
     res.status(500).json({ error: err.toString() });
   }
 });
 
-app.get("/visitor", async (req, res) => {
+app.get("/account", async (req, res) => {
   try {
     res.status(200).json(await getVisitor(req.body));
   } catch (err) {
@@ -26,7 +26,7 @@ app.get("/visitor", async (req, res) => {
   }
 });
 
-app.post("/visitor", async (req, res) => {
+app.put("/account", async (req, res) => {
   try {
     res.status(200).json(await createVisitor(req.body));
   } catch (err) {

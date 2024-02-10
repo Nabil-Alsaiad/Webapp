@@ -40,12 +40,13 @@ async function checkAccountExists(email, accountType) {
   }
 }
 /**
- * @param {import('../types').AccountTypes} accType
- * @param {import('../types').Email} email
- * @param {string} password
+ * @param {object} data
+ * @param {import('../types').AccountTypes} data.accType
+ * @param {import('../types').Email} data.email
+ * @param {string} data.password
  * @returns {Promise<void>}
  */
-export async function deleteAcc(accType, email, password) {
+export async function deleteAcc({ accType, email, password }) {
   const exists = await checkAccountExists(email);
   if (!exists) {
     throw new Error("There is no account with that email");
@@ -87,12 +88,13 @@ export async function deleteAcc(accType, email, password) {
 }
 
 /**
- * @param {import('../types').AccountTypes} accType
- * @param {import('../types').Email} email
- * @param {string} password
+ * @param {object} data
+ * @param {import('../types').AccountTypes} data.accType
+ * @param {import('../types').Email} data.email
+ * @param {string} data.password
  * @returns {Promise<void>}
  */
-export async function register(accType, email, password) {
+export async function register({ accType, email, password }) {
   const exists = await checkAccountExists(email);
   if (exists) {
     throw new Error("The email already exists");
@@ -113,12 +115,12 @@ export async function register(accType, email, password) {
 }
 
 /**
- * Logs in the account.
- * @param {import('../types').Email} email
- * @param {string} password
+ * @param {object} data
+ * @param {import('../types').Email} data.email
+ * @param {string} data.password
  * @returns {Promise<{} | {email:string, accType: string}>} - True if the login is successful, false otherwise.
  */
-export async function login(email, password) {
+export async function login({ email, password }) {
   const exists = await checkAccountExists(email);
   if (!exists) {
     throw new Error("There is no account with that email");

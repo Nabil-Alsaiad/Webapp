@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { getVisitor, getVisitors, registerVisitor } from "./func/visitor.js";
+import { getVisitor, getVisitors, createVisitor } from "./func/visitor.js";
 import { deleteAcc, login, register } from "./func/session.js";
 import { fetchAccountTypes } from "./accTypes.js";
 
@@ -20,8 +20,7 @@ app.get("/visitors", async (req, res) => {
 
 app.get("/visitor", async (req, res) => {
   try {
-    const { name, phone } = req.body;
-    res.status(200).json(await getVisitor({ name, phone }));
+    res.status(200).json(await getVisitor(req.body));
   } catch (err) {
     res.status(500).json({ error: err.toString() });
   }
@@ -29,8 +28,7 @@ app.get("/visitor", async (req, res) => {
 
 app.post("/visitor", async (req, res) => {
   try {
-  const { name, phone } = req.body;
-  res.status(201).json(await registerVisitor(name, phone));
+    res.status(200).json(await createVisitor(req.body));
   } catch (err) {
     res.status(500).json({ error: err.toString() });
   }
@@ -41,9 +39,8 @@ app.post("/visitor", async (req, res) => {
 //#region Session
 
 app.post("/delete", async (req, res) => {
-  const { accType, email, password } = req.body;
   try {
-    await deleteAcc(accType, email, password);
+    await deleteAcc(req.body);
     res.status(200).json({ message: "Deleted" });
   } catch (err) {
     res.status(500).json({ error: err.toString() });
@@ -51,9 +48,8 @@ app.post("/delete", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { accType, email, password } = req.body;
   try {
-    await register(accType, email, password);
+    await register(req.body);
     res.status(200).json({ message: "Registered" });
   } catch (err) {
     res.status(500).json({ error: err.toString() });
@@ -61,9 +57,8 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
   try {
-    const loggedIn = await login(email, password);
+    const loggedIn = await login(req.body);
     res.status(200).json(loggedIn);
   } catch (err) {
     res.status(500).json({ error: err.toString() });

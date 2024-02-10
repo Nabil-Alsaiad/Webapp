@@ -1,18 +1,21 @@
 import db from "../db.js";
 
 /**
- * @param {string} name
- * @param {import('../types.js').Phone} phone
+ * @param {object} data
+ * @param {string} data.name
+ * @param {import('../types.js').Phone} data.phone
  * @returns {Promise<object | null>}
  */
-async function registerOne(name, phone) {
+async function createOne(data) {
+  const { name, phone } = data;
+
   const sql = `
   INSERT INTO visitors (name, phone)
   VALUES (?, ?)
   `;
 
     await db.query(sql, [name, phone]);
-    return await getOne({ name, phone });
+  return await getOne(data);
 }
 
 /**
@@ -55,6 +58,6 @@ async function getMany() {
   return rows;
 }
 
-export const registerVisitor = registerOne;
+export const createVisitor = createOne;
 export const getVisitor = getOne;
 export const getVisitors = getMany;

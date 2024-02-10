@@ -27,15 +27,6 @@ app.get("/visitor", async (req, res) => {
   }
 });
 
-app.get("/visitor/:id", async (req, res) => {
-  try {
-  const id = Number.parseInt(req.params.id);
-  res.status(200).json(await getVisitor({ id }));
-  } catch (err) {
-    res.status(500).json({ error: err.toString() });
-  }
-});
-
 app.post("/visitor", async (req, res) => {
   try {
   const { name, phone } = req.body;

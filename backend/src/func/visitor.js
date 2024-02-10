@@ -1,10 +1,9 @@
-import Visitor from "../class/data/visitor.js";
 import db from "../db.js";
 
 /**
  * @param {string} name
  * @param {import('../types.js').Phone} phone
- * @returns {Promise<Visitor | null>}
+ * @returns {Promise<object | null>}
  */
 async function registerOne(name, phone) {
   const sql = `
@@ -26,7 +25,7 @@ async function registerOne(name, phone) {
  * @param {import('../types.js').ID} [options.id]
  * @param {string} [options.name]
  * @param {import('../types.js').Phone} [options.phone]
- * @returns {Promise<Visitor | null>}
+ * @returns {Promise<object | null>}
  */
 async function getOne(options) {
   const conditions = [];
@@ -48,8 +47,7 @@ async function getOne(options) {
 
   try {
     const [rows] = await db.query(sql, params);
-    const data = rows[0];
-    return Visitor.Construct(data);
+  return rows[0];
   } catch (err) {
     console.error(err.message);
     return null;
@@ -57,15 +55,14 @@ async function getOne(options) {
 }
 
 /**
- * @returns {Promise<Visitor[] | null>}
+ * @returns {Promise<object[] | null>}
  */
 async function getMany() {
   const sql = "SELECT * FROM visitors";
 
   const [rows] = await db.query(sql);
   // @ts-expect-error
-  const visitors = rows.map((row) => Visitor.Construct(row));
-  return visitors;
+  return rows;
 }
 
 export const registerVisitor = registerOne;

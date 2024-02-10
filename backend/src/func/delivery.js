@@ -1,4 +1,3 @@
-import Delivery from "../class/data/delivery.js";
 import db from "../db.js";
 
 /**
@@ -7,7 +6,7 @@ import db from "../db.js";
  * @param {import('../types').Email} email
  * @param {string} license_id
  * @param {import('../types').ID} company_id
- * @returns {Promise<Delivery | null>}
+ * @returns {Promise<object | null>}
  */
 async function registerOne(name, phone, email, license_id, company_id) {
   const sql = `
@@ -32,7 +31,7 @@ async function registerOne(name, phone, email, license_id, company_id) {
  * @param {import('../types').Email} [options.email]
  * @param {string} [options.license_id]
  * @param {import('../types').ID} [options.company_id]
- * @returns {Promise<Delivery | null>}
+ * @returns {Promise<object | null>}
  */
 async function getOne(options) {
   const conditions = [];
@@ -54,8 +53,7 @@ async function getOne(options) {
 
   try {
     const [rows] = await db.query(sql, params);
-    const data = rows[0];
-    return Delivery.Construct(data);
+  return rows[0];
   } catch (err) {
     console.error(err.message);
     return null;
@@ -63,15 +61,14 @@ async function getOne(options) {
 }
 
 /**
- * @returns {Promise<Delivery[] | null>}
+ * @returns {Promise<object[] | null>}
  */
 async function getMany() {
   const sql = "SELECT * FROM deliveries";
 
   const [rows] = await db.query(sql);
   // @ts-expect-error
-  const deliveries = rows.map((row) => Delivery.Construct(row));
-  return deliveries;
+  return rows;
 }
 
 export const registerDelivery = registerOne;

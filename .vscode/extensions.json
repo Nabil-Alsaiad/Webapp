@@ -12,6 +12,8 @@
     "dbaeumer.vscode-eslint",
     "yoavbls.pretty-ts-errors",
     "humao.rest-client",
-    "dsznajder.es7-react-js-snippets"
+    "dsznajder.es7-react-js-snippets",
+    "mtxr.sqltools",
+    "inferrinizzard.prettier-sql-vscode"
   ]
 }

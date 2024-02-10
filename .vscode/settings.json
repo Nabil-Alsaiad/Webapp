@@ -9,6 +9,10 @@
   },
   "markdown.replaceSmartQuotes": true,
 
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+
   "javascript.suggest.jsdoc.generateReturns": true,
   "javascript.suggest.completeJSDocs": true,
   "javascript.suggest.autoImports": true,

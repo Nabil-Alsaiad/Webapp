@@ -11,13 +11,8 @@ async function registerOne(name, phone) {
   VALUES (?, ?)
   `;
 
-  try {
     await db.query(sql, [name, phone]);
     return await getOne({ name, phone });
-  } catch (err) {
-    console.error(err.message);
-    return null;
-  }
 }
 
 /**
@@ -45,13 +40,8 @@ async function getOne(options) {
 
   const sql = `SELECT * FROM visitors WHERE ${conditions.join(" AND ")}`;
 
-  try {
     const [rows] = await db.query(sql, params);
   return rows[0];
-  } catch (err) {
-    console.error(err.message);
-    return null;
-  }
 }
 
 /**

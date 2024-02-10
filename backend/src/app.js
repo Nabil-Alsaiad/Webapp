@@ -11,22 +11,38 @@ app.use(express.json());
 //#region Visitor
 
 app.get("/visitors", async (req, res) => {
+  try {
   res.status(200).send(await getVisitors());
+  } catch (err) {
+    res.status(500).json({ error: err.toString() });
+  }
 });
 
 app.get("/visitor", async (req, res) => {
-  const { name, phone } = req.body;
-  res.status(200).json(await getVisitor({ name, phone }));
+  try {
+    const { name, phone } = req.body;
+    res.status(200).json(await getVisitor({ name, phone }));
+  } catch (err) {
+    res.status(500).json({ error: err.toString() });
+  }
 });
 
 app.get("/visitor/:id", async (req, res) => {
+  try {
   const id = Number.parseInt(req.params.id);
   res.status(200).json(await getVisitor({ id }));
+  } catch (err) {
+    res.status(500).json({ error: err.toString() });
+  }
 });
 
 app.post("/visitor", async (req, res) => {
+  try {
   const { name, phone } = req.body;
   res.status(201).json(await registerVisitor(name, phone));
+  } catch (err) {
+    res.status(500).json({ error: err.toString() });
+  }
 });
 
 //#endregion

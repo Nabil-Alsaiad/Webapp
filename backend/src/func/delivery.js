@@ -14,13 +14,8 @@ async function registerOne(name, phone, email, license_id, company_id) {
   VALUES (?, ?, ?, ?, ?)
   `;
 
-  try {
-    await db.query(sql, [name, phone, email, license_id, company_id]);
-    return await getOne({ name, phone, email, license_id, company_id });
-  } catch (err) {
-    console.error(err.message);
-    return null;
-  }
+  await db.query(sql, [name, phone, email, license_id, company_id]);
+  return await getOne({ name, phone, email, license_id, company_id });
 }
 
 /**
@@ -51,13 +46,8 @@ async function getOne(options) {
 
   const sql = `SELECT * FROM deliveries WHERE ${conditions.join(" AND ")}`;
 
-  try {
-    const [rows] = await db.query(sql, params);
+  const [rows] = await db.query(sql, params);
   return rows[0];
-  } catch (err) {
-    console.error(err.message);
-    return null;
-  }
 }
 
 /**

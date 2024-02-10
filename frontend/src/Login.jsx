@@ -27,7 +27,8 @@ function Login() {
       return;
     }
 
-    let accountType;
+    let accType;
+    let id;
 
     try {
       const res = await fetch("http://localhost:8888/login", {
@@ -40,7 +41,7 @@ function Login() {
           password
         })
       });
-      const { email: loggedInEmail, accType: loggedInAccType, error } = await res.json();
+      const { id: loggedIn, accType: loggedInAccType, email: loggedInEmail, error } = await res.json();
       if (error) {
         console.error(error);
         return;
@@ -50,13 +51,14 @@ function Login() {
         return;
       }
 
-      accountType = loggedInAccType;
+      accType = loggedInAccType;
+      id = loggedIn;
     } catch (err) {
       console.error(err);
       return;
     }
 
-    localStorage.setItem("loggedInAccount", JSON.stringify({ email, accountType }));
+    localStorage.setItem("loggedInAccount", JSON.stringify({ id, accType, email }));
     navigate("/");
   };
 

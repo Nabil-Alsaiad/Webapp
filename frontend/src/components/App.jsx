@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 function App() {
   const navigate = useNavigate();
   const savedAccount = localStorage.getItem("loggedInAccount");
+  const { accType } = savedAccount ? JSON.parse(savedAccount) : { accType: "" };
 
   useEffect(() => {
     if (savedAccount === null) {
@@ -16,7 +17,7 @@ function App() {
   return (
     <>
       <Header />
-      <Sidebar />
+      <Sidebar accType={accType} />
     </>
   );
 }

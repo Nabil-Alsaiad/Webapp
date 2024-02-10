@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import propTypes from "prop-types";
 import "./Sidebar.css";
 
+Sidebar.propTypes = {
+  accType: propTypes.string.isRequired
+};
+
 /**
+ * @param {object} data
+ * @param {string} data.accType
  * @returns {React.JSX.Element}
  */
-function Sidebar() {
-  const savedAccount = localStorage.getItem("loggedInAccount");
-  /** @type {{email?: string, accountType?: string}} */
-  const { accountType } = savedAccount ? JSON.parse(savedAccount) : {};
-
+function Sidebar({ accType }) {
   const [contentPage, setContentPage] = useState();
   const [SidebarComponent, setSidebarComponent] = useState(null);
 
   useEffect(() => {
-    if (accountType) {
-      const name = accountType.charAt(0).toUpperCase() + accountType.slice(1).toLowerCase();
+    if (accType) {
+      const name = accType.charAt(0).toUpperCase() + accType.slice(1).toLowerCase();
       import(`./sidebars/${name}.jsx`)
         .then((module) => {
           setSidebarComponent(() => module.default);
@@ -23,7 +26,7 @@ function Sidebar() {
           throw new Error(`Invalid user type: ${error}`);
         });
     }
-  }, [accountType]);
+  }, [accType]);
 
   if (!SidebarComponent) {
     return <></>;

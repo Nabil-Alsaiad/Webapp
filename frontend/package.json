@@ -10,8 +10,6 @@
     "format": "prettier . --write --config ../.prettierrc.json --ignore-path ../.gitignore"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "mysql2": "^3.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"

@@ -1,0 +1,21 @@
+form {
+  display: grid;
+  gap: 15px;
+  margin-left: 50px;
+  margin-top: 20px;
+  font-size: large;
+  color: brown;
+}
+
+button {
+  padding: 10px;
+  background-color: #5635eb;
+  color: #b81717;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #71a40b;
+}

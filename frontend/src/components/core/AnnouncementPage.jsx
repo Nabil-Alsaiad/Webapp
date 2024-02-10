@@ -1,85 +1,65 @@
 import React, { useState, useEffect } from "react";
-import NewAnnouncements from "./NewAnnouncement";
+import CreateAnnouncement from "./CreateAnnouncement.jsx";
 import "./AnnouncementPage.css";
 
-function CreateAnnouncement({ onCreateAnnouncement }) {
-  const [announcementTitle, setAnnouncementTitle] = useState("");
-  const [announcementDescription, setAnnouncementDescription] = useState("");
-
-  const handleTitleChange = (event) => {
-    setAnnouncementTitle(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setAnnouncementDescription(event.target.value);
-  };
-
-  const handleCreateAnnouncement = () => {
-    // Check if both Announcement Title and Description are provided
-    if (announcementTitle && announcementDescription) {
-      // Create a new announcement object
-      const newAnnouncement = {
-        title: announcementTitle,
-        description: announcementDescription
-      };
-
-      // Pass the new announcement to the parent component
-      onCreateAnnouncement(newAnnouncement);
-
-      // Clear the form after creating the announcement
-      setAnnouncementTitle("");
-      setAnnouncementDescription("");
-    }
-  };
-
-  return (
-    <div>
-      <h2>Create New Announcement</h2>
-      <label>
-        Announcement Title:
-        <input type="text" value={announcementTitle} onChange={handleTitleChange} />
-      </label>
-      <br />
-
-      <label>
-        Announcement Description:
-        <textarea value={announcementDescription} onChange={handleDescriptionChange} />
-      </label>
-      <br />
-
-      <button type="button" onClick={handleCreateAnnouncement}>
-        Create Announcement
-      </button>
-    </div>
-  );
-}
-
-const AnnouncementPage = () => {
+/**
+ * @returns {React.JSX.Element}
+ */
+function AnnouncementPage() {
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
-    // Load data from local storage when component mounts
-    const announcementData = localStorage.getItem("announcementData");
-    const storedAnnouncements = announcementData ? JSON.parse(announcementData) : [];
-    setAnnouncements(storedAnnouncements);
+    fetch("http://localhost:8888/announcements", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAnnouncements(data);
+      });
   }, []);
 
-  const handleCreateAnnouncement = (newAnnouncement) => {
-    // Update the announcements array
-    setAnnouncements([...announcements, newAnnouncement]);
-
-    // Store the updated data in local storage
-    localStorage.setItem("announcementData", JSON.stringify([...announcements, newAnnouncement]));
+  const handleCreateAnnouncement = (announcement) => {
+    // @ts-expect-error
+    setAnnouncements([...announcements, announcement]);
+    fetch("http://localhost:8888/announcement", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(announcement)
+    });
   };
 
   return (
     <div>
       <h1>Announcement Page</h1>
-      <CreateAnnouncement onCreateAnnouncement={handleCreateAnnouncement} />
-      <NewAnnouncements announcements={announcements} />
-      {/* Additional components or display for existing announcements can be added here */}
+      <CreateAnnouncement onAnnouncementCreated={handleCreateAnnouncement} />
+      <div className="announcements">
+        <h2>Announcements</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Title</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {announcements.map((/** @type {{title:String,description:string}} */ a, i) => (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{a.title}</td>
+                <td>{a.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-};
+}
 
 export default AnnouncementPage;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RegisterForm from "../core/RegisterForm";
+import AccountInformation from "../core/AccountInformation";
 import QRVerification from "../core/QRVerification";
 import SubpagesContainer from "../core/SubpagesContainer";
 import PropTypes from "prop-types";
@@ -14,7 +14,7 @@ function VisitorSidebar({ onPageChosen }) {
 
   useEffect(() => {
     if (subpageIndex === 0) {
-      onPageChosen(<RegisterForm />);
+      onPageChosen(<AccountInformation />);
     } else if (subpageIndex === 1) {
       onPageChosen(<QRVerification />);
     }
@@ -22,7 +22,7 @@ function VisitorSidebar({ onPageChosen }) {
 
   return (
     <li>
-      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Profile"} subpagesNames={["Register User", "QR Verification"]} />
+      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Profile"} subpagesNames={["Account Information", "QR Verification"]} />
     </li>
   );
 }

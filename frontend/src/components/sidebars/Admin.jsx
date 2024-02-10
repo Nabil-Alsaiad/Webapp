@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RegisterForm from "../core/RegisterForm";
+import AccountInformation from "../core/AccountInformation";
 import ViewUser from "../core/ViewUser";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";
@@ -18,7 +18,7 @@ function AdminSidebar({ onPageChosen }) {
 
   useEffect(() => {
     if (pageIndex === 0) {
-      onPageChosen(<RegisterForm extra={true} />);
+      onPageChosen(<AccountInformation extra={true} />);
     } else if (pageIndex === 1) {
       onPageChosen(<ViewUser />);
     } else if (pageIndex === 2) {
@@ -42,7 +42,7 @@ function AdminSidebar({ onPageChosen }) {
   return (
     <>
       <li>
-        <SubpagesContainer onIndexChange={handleClick1} name={"Profile"} subpagesNames={["Register User", "View User"]} />
+        <SubpagesContainer onIndexChange={handleClick1} name={"Profile"} subpagesNames={["Account Information", "View Users"]} />
       </li>
       <li>
         <a onClick={() => setPageIndex(2)}>

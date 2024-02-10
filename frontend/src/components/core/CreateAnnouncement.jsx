@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -25,13 +26,22 @@ function CreateAnnouncement({ onAnnouncementCreated }) {
       return;
     }
 
-    onAnnouncementCreated({
+    const announcement = {
       title: titleEl.value.trim(),
       description: descriptionEl.value.trim()
-    });
+    };
 
-    titleEl.value = "";
-    descriptionEl.value = "";
+    if (announcement.title.length < 10) {
+      alert("Title must be at least 10 characters");
+      return;
+    }
+
+    if (announcement.description.length < 50) {
+      alert("Description must be at least 50 characters");
+      return;
+    }
+
+    onAnnouncementCreated(announcement);
   };
 
   return (
@@ -39,11 +49,11 @@ function CreateAnnouncement({ onAnnouncementCreated }) {
       <h2>Create New Announcement</h2>
       <label>
         Title
-        <input id="create-announcement-title" type="text" />
+        <input id="create-announcement-title" type="text" required />
       </label>
       <label>
         Description
-        <textarea id="create-announcement-description" />
+        <textarea id="create-announcement-description" required />
       </label>
       <button type="button" onClick={handleCreateAnnouncement}>
         Create

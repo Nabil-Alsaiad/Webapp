@@ -3,6 +3,7 @@ import cors from "cors";
 import { getAccounts, getAccount, updateAccount } from "./func/account.js";
 import { deleteAcc, login, register } from "./func/session.js";
 import { fetchAccountTypes } from "./accTypes.js";
+import { createAnnouncement, getAnnouncements } from "./func/announcement.js";
 
 const app = express();
 app.use(cors());
@@ -68,6 +69,30 @@ app.post("/login", async (req, res) => {
     const loggedIn = await login(req.body);
     res.status(200).json(loggedIn);
   } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+//#endregion
+
+//#region Announcement
+
+app.get("/announcements", async (req, res) => {
+  try {
+    res.status(200).send(await getAnnouncements());
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+app.post("/announcement", async (req, res) => {
+  try {
+    await createAnnouncement(req.body);
+    res.status(200).json({ message: "Created" });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });

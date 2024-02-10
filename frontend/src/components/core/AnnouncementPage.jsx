@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import CreateAnnouncement from "./CreateAnnouncement.jsx";
 import "./AnnouncementPage.css";
@@ -22,14 +23,22 @@ function AnnouncementPage() {
   }, []);
 
   const handleCreateAnnouncement = (announcement) => {
-    // @ts-expect-error
-    setAnnouncements([...announcements, announcement]);
     fetch("http://localhost:8888/announcement", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(announcement)
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        // @ts-expect-error
+        setAnnouncements([...announcements, announcement]);
+        alert("Announcement Created!");
+      } else if (res.status >= 400 && res.status < 600) {
+        res.json().then((data) => {
+          alert("Error: " + data?.error);
+        });
+      }
     });
   };
 

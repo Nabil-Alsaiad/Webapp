@@ -14,26 +14,26 @@ async function createOne(data) {
   VALUES (?, ?)
   `;
 
-    await db.query(sql, [name, phone]);
+  await db.query(sql, [name, phone]);
   return await getOne(data);
 }
 
 /**
- * @param {object} options
- * @param {import('../types.js').ID} [options.id]
- * @param {string} [options.name]
- * @param {import('../types.js').Phone} [options.phone]
+ * @param {object} data
+ * @param {import('../types.js').ID} [data.id]
+ * @param {string} [data.name]
+ * @param {import('../types.js').Phone} [data.phone]
  * @returns {Promise<object | null>}
  */
-async function getOne(options) {
+async function getOne(data) {
   const conditions = [];
-  const params = [];
+  const values = [];
 
   const keys = ["id", "name", "phone"];
   keys.forEach((key) => {
-    if (options[key]) {
+    if (data[key]) {
       conditions.push(`${key} = ?`);
-      params.push(options[key]);
+      values.push(data[key]);
     }
   });
 
@@ -43,7 +43,7 @@ async function getOne(options) {
 
   const sql = `SELECT * FROM visitors WHERE ${conditions.join(" AND ")}`;
 
-    const [rows] = await db.query(sql, params);
+  const [rows] = await db.query(sql, values);
   return rows[0];
 }
 

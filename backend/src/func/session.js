@@ -23,13 +23,13 @@ async function checkAccountExists(email, accountType) {
   }
 
   try {
-    const data = await db.query(sql, values);
+    const [rows] = await db.query(sql, values);
     /** @type {import('../types').Email} */
-    const storedEmail = data[0][0].email;
+    const storedEmail = rows[0].email;
     let exists = storedEmail === email;
 
     if (accountTypeId) {
-      const storedAccountTypeId = data[0][0].type_id;
+      const storedAccountTypeId = rows[0].type_id;
       exists &&= storedAccountTypeId === accountTypeId;
     }
 
@@ -61,9 +61,9 @@ export async function deleteAcc({ accType, email, password }) {
   `;
   const values = [typeId, email];
 
-  const packet = await db.query(sql, values);
+  const [rows] = await db.query(sql, values);
   /** @type {object} */
-  const data = packet[0][0];
+  const data = rows[0];
 
   /** @type {string} */
   const hashedPassword = data.password;
@@ -132,18 +132,17 @@ export async function login({ email, password }) {
   `;
   const values = [email];
 
-  const packet = await db.query(sql, values);
-  /** @type {object[]} */
-  // @ts-expect-error
-  const data = packet[0];
+  const [rows] = await db.query(sql, values);
 
   let loggedIn = {};
 
-  if (data.length === 0) {
+  // @ts-expect-error
+  if (rows.length === 0) {
     return loggedIn;
   }
 
-  data.forEach((r) => {
+  // @ts-expect-error
+  rows.forEach((r) => {
     /** @type {string} */
     const hashedPassword = r.password;
     if (!hashedPassword) {

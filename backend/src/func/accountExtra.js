@@ -2,20 +2,20 @@ import db from "../db.js";
 
 /**
  * @param {string} name
- * @param {import('../types').Phone} phone
- * @param {import('../types').Email} email
+ * @param {import('../types.js').Phone} phone
+ * @param {import('../types.js').Email} email
  * @param {string} license_id
- * @param {import('../types').ID} company_id
+ * @param {import('../types.js').ID} company_id
  * @returns {Promise<object | null>}
  */
-async function registerOne(name, phone, email, license_id, company_id) {
+export async function updateAccountWithExtra(name, phone, email, license_id, company_id) {
   const sql = `
-  INSERT INTO deliveries (name, phone, email, license_id, company_id)
+  INSERT INTO accounts_extra (name, phone, email, license_id, company_id)
   VALUES (?, ?, ?, ?, ?)
   `;
 
   await db.query(sql, [name, phone, email, license_id, company_id]);
-  return await getOne({ name, phone, email, license_id, company_id });
+  return await getAccountWithExtra({ name, phone, email, license_id, company_id });
 }
 
 /**
@@ -23,12 +23,12 @@ async function registerOne(name, phone, email, license_id, company_id) {
  * @param {import('../types.js').ID} [options.id]
  * @param {string} [options.name]
  * @param {import('../types.js').Phone} [options.phone]
- * @param {import('../types').Email} [options.email]
+ * @param {import('../types.js').Email} [options.email]
  * @param {string} [options.license_id]
- * @param {import('../types').ID} [options.company_id]
+ * @param {import('../types.js').ID} [options.company_id]
  * @returns {Promise<object | null>}
  */
-async function getOne(options) {
+export async function getAccountWithExtra(options) {
   const conditions = [];
   const params = [];
 
@@ -44,7 +44,7 @@ async function getOne(options) {
     return null;
   }
 
-  const sql = `SELECT * FROM deliveries WHERE ${conditions.join(" AND ")}`;
+  const sql = `SELECT * FROM accounts_extra WHERE ${conditions.join(" AND ")}`;
 
   const [rows] = await db.query(sql, params);
   return rows[0];
@@ -53,14 +53,10 @@ async function getOne(options) {
 /**
  * @returns {Promise<object[] | null>}
  */
-async function getMany() {
-  const sql = "SELECT * FROM deliveries";
+export async function getAccountsWithExtra() {
+  const sql = "SELECT * FROM accounts_extra";
 
   const [rows] = await db.query(sql);
   // @ts-expect-error
   return rows;
 }
-
-export const registerDelivery = registerOne;
-export const getDelivery = getOne;
-export const getDeliveries = getMany;

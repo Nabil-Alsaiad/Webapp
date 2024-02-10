@@ -2,8 +2,8 @@ import db from "../db.js";
 import { convertAccountType } from "../accTypes.js";
 
 /**
- * @param {import('../types').Email} email
- * @param {import('../types').AccountTypes} [accType]
+ * @param {import('../../../types').Email} email
+ * @param {import('../../../types').AccountTypes} [accType]
  * @returns {Promise<boolean>}
  */
 async function checkAccountExists(email, accType) {
@@ -23,7 +23,7 @@ async function checkAccountExists(email, accType) {
 
   try {
     const [rows] = await db.query(sql, values);
-    /** @type {import('../types').Email} */
+    /** @type {import('../../../types').Email} */
     const storedEmail = rows[0].email;
     let exists = storedEmail === email;
 
@@ -39,7 +39,7 @@ async function checkAccountExists(email, accType) {
   }
 }
 /**
- * @param {import('../types').Account} data
+ * @param {import('../../../types').Account} data
  * @returns {Promise<void>}
  */
 export async function deleteAcc({ id, accType, email }) {
@@ -61,7 +61,7 @@ export async function deleteAcc({ id, accType, email }) {
 }
 
 /**
- * @param {import('../types').Account} data
+ * @param {import('../../../types').Account} data
  * @returns {Promise<void>}
  */
 export async function register({ accType, email, password }) {
@@ -81,8 +81,8 @@ export async function register({ accType, email, password }) {
 }
 
 /**
- * @param {import('../types').Account} data
- * @returns {Promise<{} | import('../types').Account>} - True if the login is successful, false otherwise.
+ * @param {import('../../../types').Account} data
+ * @returns {Promise<{} | import('../../../types').Account>} - True if the login is successful, false otherwise.
  */
 export async function login({ email, password }) {
   const exists = await checkAccountExists(email);

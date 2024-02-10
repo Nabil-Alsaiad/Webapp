@@ -1,7 +1,7 @@
 import db from "../db.js";
 
 /**
- * @param {import('../types').Announcement} data
+ * @param {import('../../../types').Announcement} data
  * @returns {Promise<void>}
  */
 export async function createAnnouncement({ title, description }) {
@@ -14,7 +14,7 @@ export async function createAnnouncement({ title, description }) {
 }
 
 /**
- * @returns {Promise<import('../types').Announcement[] | null>}
+ * @returns {Promise<import('../../../types').Announcement[] | null>}
  */
 export async function getAnnouncements() {
   const sql = "SELECT * FROM announcements";

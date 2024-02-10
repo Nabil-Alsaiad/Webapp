@@ -1,7 +1,7 @@
 import db from "../db.js";
 
 /**
- * @param {import('../types.d.ts').FullAccount} data
+ * @param {import('../../../types').FullAccount} data
  * @returns {Promise<void>}
  */
 export async function updateAccount(data) {
@@ -30,8 +30,8 @@ export async function updateAccount(data) {
 }
 
 /**
- * @param {Partial<import('../types.d.ts').Account>} data
- * @returns {Promise<import('../types').Account | null>}
+ * @param {Partial<import('../../../types').Account>} data
+ * @returns {Promise<import('../../../types').Account | null>}
  */
 export async function getAccount(data) {
   const conditions = [];
@@ -56,7 +56,7 @@ export async function getAccount(data) {
 }
 
 /**
- * @returns {Promise<import('../types').Account[] | null>}
+ * @returns {Promise<import('../../../types').Account[] | null>}
  */
 export async function getAccounts() {
   const sql = "SELECT * FROM accounts";

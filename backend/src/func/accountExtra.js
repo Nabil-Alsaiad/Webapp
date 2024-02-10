@@ -2,10 +2,10 @@ import db from "../db.js";
 
 /**
  * @param {string} name
- * @param {import('../types.js').Phone} phone
- * @param {import('../types.js').Email} email
+ * @param {import('../../../types').Phone} phone
+ * @param {import('../../../types').Email} email
  * @param {string} license_id
- * @param {import('../types.js').ID} company_id
+ * @param {import('../../../types').ID} company_id
  * @returns {Promise<object | null>}
  */
 export async function updateAccountWithExtra(name, phone, email, license_id, company_id) {
@@ -20,12 +20,12 @@ export async function updateAccountWithExtra(name, phone, email, license_id, com
 
 /**
  * @param {object} options
- * @param {import('../types.js').ID} [options.id]
+ * @param {import('../../../types').ID} [options.id]
  * @param {string} [options.name]
- * @param {import('../types.js').Phone} [options.phone]
- * @param {import('../types.js').Email} [options.email]
+ * @param {import('../../../types').Phone} [options.phone]
+ * @param {import('../../../types').Email} [options.email]
  * @param {string} [options.license_id]
- * @param {import('../types.js').ID} [options.company_id]
+ * @param {import('../../../types').ID} [options.company_id]
  * @returns {Promise<object | null>}
  */
 export async function getAccountWithExtra(options) {

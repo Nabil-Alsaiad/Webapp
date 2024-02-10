@@ -4,8 +4,10 @@ const AccountTypes = {};
 
 export async function fetchAccountTypes() {
   try {
-    const types = await db.query("SELECT * FROM acc_types");
-    const accountTypes = types[0].map((t) => {
+    /** @type {{id:number,name:string}[][]} */
+    // @ts-expect-error
+    const [rows] = await db.query("SELECT * FROM acc_types");
+    rows.map((t) => {
       AccountTypes[t.id] = t.name;
       AccountTypes[t.name] = t.id;
     });

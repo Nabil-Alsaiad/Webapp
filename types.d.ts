@@ -16,6 +16,15 @@ export declare type Announcement = {
   created_at?: Date;
 };
 
+export declare type Maintenance = {
+  id: ID;
+  title: string;
+  type: "facility" | "website";
+  assigned_to_id?: ID;
+  assigned_to?: Email;
+  maintenance_date: Date;
+};
+
 export declare type Account = {
   id: ID;
   accType: AccountTypes;

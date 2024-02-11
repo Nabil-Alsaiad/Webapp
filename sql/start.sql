@@ -65,3 +65,14 @@ CREATE TABLE
     description TEXT NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
+
+DROP TABLE IF EXISTS maintenances;
+
+CREATE TABLE
+  maintenances (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    type CHAR(10) NOT NULL,
+    assigned_to_id INT NOT NULL REFERENCES accounts (id),
+    maintenance_date DATETIME NOT NULL
+  );

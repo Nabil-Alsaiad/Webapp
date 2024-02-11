@@ -1,28 +1,29 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 
 function MaintenanceApproval() {
-  const maintenanceReportData = [];
+  const maintenanceReports = [];
 
   return (
     <div className="maintenance-approval-container">
-      <h2>Maintenance Report Received</h2>
+      <h2>Maintenance Reports</h2>
       <table className="maintenance-approval-table">
         <thead>
           <tr>
-            <th>Report No</th>
-            <th>Report Title</th>
+            <th>Number</th>
+            <th>Title</th>
             <th>Status</th>
             <th>Assigned To</th>
             <th>Submission Date</th>
           </tr>
         </thead>
         <tbody>
-          {maintenanceReportData.length === 0 ? (
+          {maintenanceReports.length === 0 ? (
             <tr>
               <td colSpan={5}>No maintenance reports received.</td>
             </tr>
           ) : (
-            maintenanceReportData.map((report, index) => (
+            maintenanceReports.map((report, index) => (
               <tr key={index}>
                 <td>{report.reportNo}</td>
                 <td>{report.reportTitle}</td>

@@ -1,42 +1,82 @@
-import React, { useState, useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from "react";
 
 function MaintenanceSchedule() {
-  const [maintenanceData, setMaintenanceData] = useState(() => {
-    // Retrieve data from localStorage on initial load
-    const storedData = localStorage.getItem("maintenanceData");
-    return storedData ? JSON.parse(storedData) : [];
-  });
+  /** @type {[object[], React.Dispatch<any>]} */
+  const [maintenances, setMaintenances] = useState([]);
 
   useEffect(() => {
-    // Update localStorage whenever maintenanceData changes
-    localStorage.setItem("maintenanceData", JSON.stringify(maintenanceData));
-  }, [maintenanceData]);
+    fetch("http://localhost:8888/maintenances", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMaintenances(data);
+      });
+  }, []);
 
-  const handleCellEdit = (rowIndex, property, value) => {
-    const updatedData = [...maintenanceData];
-    updatedData[rowIndex][property] = value;
-    setMaintenanceData(updatedData);
-  };
+  /**
+   * @param {number} row
+   * @param {string} key
+   * @param {string} value
+   */
+  function handleCellEdit(row, key, value) {
+    const updatedData = [...maintenances];
 
-  const handleAddRow = () => {
-    setMaintenanceData((prevData) => [
+    if (key === "type") {
+      value = value.trim().toLowerCase();
+      if (value !== "facility" && value !== "website") {
+        value = "Facility";
+        alert('Type can only be "Facility" or "Website"');
+      }
+    } else if (key === "maintenance_date") {
+      const date = new Date(value);
+      if (isNaN(date.getTime())) {
+        const date = new Date();
+        value = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+        alert("Invalid date");
+      }
+    } else if (key === "assigned_to") {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(value)) {
+        alert("Invalid email");
+        return;
+      }
+    }
+
+    updatedData[row][key] = value;
+    setMaintenances(updatedData);
+  }
+
+  function handleAddRow() {
+    setMaintenances((prevData) => [
       ...prevData,
       {
-        reportNo: "",
-        reportTitle: "",
-        reportType: "",
-        assignedTo: "",
-        maintenanceTime: "",
-        maintenanceDate: ""
+        title: "",
+        type: "",
+        assigned_to: "",
+        maintenance_date: "",
+        maintenance_time: ""
       }
     ]);
-  };
+  }
 
-  const handleSave = () => {
-    // You can perform additional logic before saving if needed
-    // For now, just update the state and let useEffect handle localStorage
-    setMaintenanceData([...maintenanceData]);
-  };
+  async function handleSave() {
+    const res = await fetch("http://localhost:8888/maintenances", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(maintenances)
+    });
+    const data = await res.json();
+    if (data.error) {
+      alert(data.error);
+    }
+  }
 
   return (
     <div className="maintenance-schedule-container">
@@ -44,34 +84,28 @@ function MaintenanceSchedule() {
       <table className="maintenance-table">
         <thead>
           <tr>
-            <th>Report No</th>
-            <th>Report Title</th>
-            <th>Report Type</th>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Type</th>
             <th>Assigned To</th>
-            <th>Maintenance Time</th>
             <th>Maintenance Date</th>
           </tr>
         </thead>
         <tbody>
-          {maintenanceData.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "reportNo", e.target.innerText)}>
-                {row.reportNo}
+          {maintenances.map((obj, i) => (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "title", e.target.innerText)}>
+                {obj.title}
               </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "reportTitle", e.target.innerText)}>
-                {row.reportTitle}
+              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "type", e.target.innerText)}>
+                {obj.type}
               </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "reportType", e.target.innerText)}>
-                {row.reportType}
+              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "assigned_to", e.target.innerText)}>
+                {obj.assigned_to}
               </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "assignedTo", e.target.innerText)}>
-                {row.assignedTo}
-              </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "maintenanceTime", e.target.innerText)}>
-                {row.maintenanceTime}
-              </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(rowIndex, "maintenanceDate", e.target.innerText)}>
-                {row.maintenanceDate}
+              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "maintenance_date", e.target.innerText)}>
+                {obj.maintenance_date}
               </td>
             </tr>
           ))}

@@ -30,7 +30,7 @@ function AccountInformation({ extra }) {
         setValue("name", data.name);
         setValue("phone", data.phone);
 
-        setValue("register-date", new Date(data.register_date).toString());
+        setValue("register-date", new Date(data.register_date).toLocaleDateString());
 
         if (extra) {
           setValue("licenseId", data.license_id);

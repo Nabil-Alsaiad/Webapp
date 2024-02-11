@@ -1,4 +1,5 @@
 import db from "../db.js";
+import { convertAccountType } from "../accTypes.js";
 
 /**
  * @param {import('../../../types').FullAccount} data
@@ -11,8 +12,13 @@ export async function updateAccount(data) {
   const keys = ["accType", "email", "password", "name", "phone"];
   keys.forEach((key) => {
     if (data[key]) {
-      toUpdate.push(`${key} = ?`);
-      values.push(data[key]);
+      if (key === "accType") {
+        toUpdate.push("type_id = ?");
+        values.push(convertAccountType(data[key]));
+      } else {
+        toUpdate.push(`${key} = ?`);
+        values.push(data[key]);
+      }
     }
   });
 
@@ -63,5 +69,10 @@ export async function getAccounts() {
 
   const [rows] = await db.query(sql);
   // @ts-expect-error
-  return rows;
+  return rows.map((r) => {
+    r.accType = convertAccountType(r.type_id);
+    delete r.password;
+    delete r.type_id;
+    return r;
+  });
 }

@@ -1,79 +1,158 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 
-function ViewUser() {
-  const [userData, setUserData] = useState([]);
+const accTypes = ["admin", "agent", "contractor", "delivery", "security", "developer", "tenant", "visitor"];
+const columnNames = ["accType", "name", "email", "phone", "register_date"];
+
+/**
+ * @returns {React.JSX.Element}
+ */
+function ViewAccounts() {
+  /** @type {[object[], React.Dispatch<any>]} */
+  const [accounts, setAccounts] = useState([]);
+  /** @type {[Map<number, object>, React.Dispatch<any>]} */
+  const [changes, setChanges] = useState(new Map());
   const [editMode, setEditMode] = useState(false);
-  const [selectedCell, setSelectedCell] = useState(null);
+  const [selectedCell, setSelectedCell] = useState({ row: 0, column: 0 });
 
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    const storedData = userData ? JSON.parse(userData) : [];
-    setUserData(storedData);
+    fetch("http://localhost:8888/accounts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAccounts(data);
+      });
   }, []);
 
-  const handleEditClick = () => {
-    setEditMode(!editMode);
-    setSelectedCell(null);
-  };
-
-  const handleCellClick = (rowIndex, columnIndex) => {
+  /**
+   * @param {number} row
+   * @param {number} column
+   */
+  function handleCellClick(row, column) {
     if (editMode) {
-      setSelectedCell({ row: rowIndex, column: columnIndex });
+      setSelectedCell({ row: row, column: column });
     }
-  };
+  }
 
-  const handleCellValueChange = (event) => {
-    const newValue = event.target.value;
-    const updatedData = [...userData];
+  /**
+   * @param {number} row
+   * @param {number} column
+   * @param {string} newValue
+   */
+  function handleCellValueChange(row, column, newValue) {
+    const accChange = changes.get(row) || {};
+    accChange[column] = newValue;
+    changes.set(row, accChange);
+  }
 
-    if (selectedCell) {
-      const { row, column } = selectedCell;
-      updatedData[row] = {
-        ...updatedData[row],
-        [Object.keys(updatedData[row])[column]]: newValue
-      };
-      setUserData(updatedData);
-    }
-  };
-
-  const renderTableCell = (rowIndex, columnIndex, value) => {
-    if (editMode && selectedCell && selectedCell.row === rowIndex && selectedCell.column === columnIndex) {
-      return <input type="text" value={value} onChange={handleCellValueChange} />;
+  function handleEditModeToggle() {
+    setEditMode(!editMode);
+    if (!editMode) {
+      return;
     }
 
-    return <div onClick={() => handleCellClick(rowIndex, columnIndex)}>{value}</div>;
-  };
+    changes.forEach((accChange, row) => {
+      for (const [column, newValue] of Object.entries(accChange)) {
+        const columnName = columnNames[column];
+
+        if (columnName === "accType") {
+          if (!accTypes.includes(newValue)) {
+            alert("Invalid account type");
+            continue;
+          }
+        } else if (columnName === "email") {
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(newValue)) {
+            alert("Invalid email");
+            continue;
+          }
+        } else if (columnName === "phone") {
+          const phonePattern = /^\+?\d{10,11}$/;
+          if (!phonePattern.test(newValue)) {
+            alert("Invalid contact number");
+            continue;
+          }
+        }
+
+        // @ts-ignore
+        const updatedAccount = { ...accounts[row], [columnName]: newValue };
+
+        fetch("http://localhost:8888/account", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(updatedAccount)
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              alert(`Error(${row}, ${column}): ` + data.error);
+            } else {
+              const updated = [...accounts];
+              updated[row] = updatedAccount;
+              setAccounts(updated);
+            }
+          });
+      }
+    });
+
+    setChanges(new Map());
+  }
+
+  function getAccountsHTML() {
+    return accounts.map((/** @type {{ [x: string]: any; }} */ acc, /** @type {number} */ row) => {
+      const accountRow = columnNames.map((key, column) => {
+        if (key === "register_date") {
+          return <td key={column}>{new Date(acc[key]).toLocaleDateString()}</td>;
+        }
+
+        const oldChange = changes.get(row);
+        /** @type {string} */
+        let value = oldChange?.[column] || acc[key] || "-";
+
+        const asInput = editMode && selectedCell.row === row && selectedCell.column === column;
+        const inside = asInput ? <input type="text" defaultValue={value} onChange={(e) => handleCellValueChange(row, column, e.target.value)} /> : value;
+
+        return (
+          <td key={column} onClick={() => handleCellClick(row, column)}>
+            {inside}
+          </td>
+        );
+      });
+
+      return (
+        <tr key={row}>
+          <td>{row + 1}</td>
+          {accountRow}
+        </tr>
+      );
+    });
+  }
 
   return (
     <div>
-      <h1>User Profiles</h1>
-      <button onClick={handleEditClick}>{editMode ? "Done Editing" : "Edit"}</button>
+      <h1>Account Profiles</h1>
+      <button onClick={handleEditModeToggle}>{editMode ? "Done Editing" : "Edit"}</button>
       <table>
         <thead>
           <tr>
-            <th>No</th>
-            <th>User ID</th>
+            <th>Number</th>
+            <th>Account Type</th>
             <th>Name</th>
+            <th>Email</th>
             <th>Contact Number</th>
-            <th>User Type</th>
             <th>Register Date</th>
-            <th>Email Address</th>
-            <th>Unit Number</th>
           </tr>
         </thead>
-        <tbody>
-          {userData.map((user, rowIndex) => (
-            <tr key={rowIndex}>
-              <td>{rowIndex + 1}</td>
-              {Object.values(user).map((value, columnIndex) => (
-                <td key={columnIndex}>{renderTableCell(rowIndex, columnIndex, value)}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{getAccountsHTML()}</tbody>
       </table>
     </div>
   );
 }
 
-export default ViewUser;
+export default ViewAccounts;

@@ -9,6 +9,12 @@ export declare type AccountTypes = "visitor" | "delivery" | "develoepr" | "admin
 
 export declare type FullAccount = Account & AccountExtra;
 
+export declare type SQLCommand = SQLSelect | SQLInsert | SQLUpdate | SQLDelete;
+export declare type SQLSelect = `SELECT ${string} FROM ${string}`;
+export declare type SQLInsert = `INSERT INTO ${string} (${string}) VALUES (${string})`;
+export declare type SQLUpdate = `UPDATE ${string} SET ${string} WHERE ${string}`;
+export declare type SQLDelete = `DELETE FROM ${string} WHERE ${string}`;
+
 export declare type Announcement = {
   id: ID;
   title: string;

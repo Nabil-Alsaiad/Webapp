@@ -1,0 +1,28 @@
+### Get all the accounts
+GET {{hostname}}/accounts
+Content-Type: application/json
+
+### Get a account by name
+GET {{hostname}}/account
+Content-Type: application/json
+
+{
+  "name": "Norah Tan"
+}
+
+### Get a account by phone
+GET {{hostname}}/account
+Content-Type: application/json
+
+{
+  "phone": "601234567804"
+}
+
+### Create a account
+POST {{hostname}}/account
+Content-Type: application/json
+
+{
+  "name": "Yes Yes",
+  "phone": "000000000001"
+}

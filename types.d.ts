@@ -36,6 +36,17 @@ export declare type Maintenance = {
   maintenance_datetime: string | Date;
 };
 
+export declare type MaintenanceReport = {
+  id: ID;
+  maintenance_id: ID;
+  title?: string;
+  description: string;
+  resolved: boolean | 1 | 0;
+  approved: boolean | 1 | 0;
+  submitted_by?: ID | Email;
+  submission_date: string | Date;
+};
+
 export declare type MaintenanceTypes = "facility" | "webapp";
 
 export declare type Account = {

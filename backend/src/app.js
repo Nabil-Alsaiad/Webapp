@@ -5,6 +5,7 @@ import { deleteAcc, login, register } from "./func/session.js";
 import { fetchAccountTypes } from "./accTypes.js";
 import { createAnnouncement, getAnnouncements } from "./func/announcement.js";
 import { getMaintenances, updateMaintenances } from "./func/maintenance.js";
+import { approveMaintenanceReport, createMaintenanceReport, getMaintenanceReports } from "./func/maintenanceReport.js";
 import { createReport, getReports } from "./func/report.js";
 
 const app = express();
@@ -116,6 +117,39 @@ app.post("/maintenances", async (req, res) => {
   try {
     await updateMaintenances(req.body);
     res.status(200).json({ message: "Updated" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+//#endregion
+
+//#region Maintenance Report
+
+app.get("/maintenance-reports", async (req, res) => {
+  try {
+    res.status(200).send(await getMaintenanceReports());
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+app.post("/maintenance-report", async (req, res) => {
+  try {
+    await createMaintenanceReport(req.body);
+    res.status(200).json({ message: "Created" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+app.put("/maintenance-report", async (req, res) => {
+  try {
+    await approveMaintenanceReport(req.body);
+    res.status(200).json({ message: "Approved" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.toString() });

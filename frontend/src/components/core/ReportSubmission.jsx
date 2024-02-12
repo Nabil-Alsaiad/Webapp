@@ -3,53 +3,62 @@ import React, { useState } from "react";
 import "./ReportSubmission.css";
 
 function ReportSubmission() {
-  const [reportNo, setReportNo] = useState("");
+  const [number, setNumber] = useState("");
   const [status, setStatus] = useState("Resolved");
-  const [overallReport, setOverallReport] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleFormSubmit = (e) => {
+  /** @type {React.FormEventHandler<HTMLFormElement>} */
+  function handleFormSubmit(e) {
     e.preventDefault();
 
-    // Create a new report object with user input
-    const newReport = {
-      reportNo,
-      status,
-      overallReport
+    const savedAccount = localStorage.getItem("LoggedInAccount");
+    const { id: loggedInId } = savedAccount ? JSON.parse(savedAccount) : { id: -1 };
+
+    /** @type {Omit<import('../../../../types').MaintenanceReport, "id" | "approved">} */
+    const newMaintenanceReport = {
+      maintenance_id: parseInt(number) - 1,
+      resolved: status === "Resolved" ? 1 : 0,
+      description,
+      submitted_by: loggedInId,
+      submission_date: new Date().toLocaleDateString()
     };
 
-    // Retrieve existing reports from local storage
-    const maintenanceReports = localStorage.getItem("maintenanceReports");
-    const existingReports = maintenanceReports ? JSON.parse(maintenanceReports) : [];
+    fetch("http://localhost:8888/maintenance-report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newMaintenanceReport)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+        }
+      });
 
-    // Add the new report to the existing reports
-    const updatedReports = [...existingReports, newReport];
-
-    // Save the updated reports in local storage
-    localStorage.setItem("maintenanceReports", JSON.stringify(updatedReports));
-
-    // Clear the form fields after submission
-    setReportNo("");
+    setNumber("");
     setStatus("Resolved");
-    setOverallReport("");
-  };
+    setDescription("");
+  }
 
   return (
     <div className="report-submission-container">
-      <h2>Maintenance Report Generation</h2>
+      <h2>Maintenance Report Submissions</h2>
       <form onSubmit={handleFormSubmit}>
-        <label htmlFor="reportNo">Report No:</label>
-        <input type="text" id="reportNo" value={reportNo} onChange={(e) => setReportNo(e.target.value)} required />
+        <label htmlFor="number">Number</label>
+        <input type="text" id="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
 
-        <label htmlFor="status">Status:</label>
+        <label htmlFor="status">Status</label>
         <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
           <option value="Resolved">Resolved</option>
           <option value="Not Resolved">Not Resolved</option>
         </select>
 
-        <label htmlFor="overallReport">Overall Report:</label>
-        <textarea id="overallReport" value={overallReport} onChange={(e) => setOverallReport(e.target.value)} required />
+        <label htmlFor="description">Description</label>
+        <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
 
-        <button type="submit">Submit Report</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

@@ -32,9 +32,8 @@ export declare type Maintenance = {
   id: ID;
   title: string;
   type: MaintenanceTypes;
-  assigned_to_id?: ID;
-  assigned_to?: Email;
-  maintenance_date: Date;
+  assigned_to?: ID | Email;
+  maintenance_datetime: string | Date;
 };
 
 export declare type MaintenanceTypes = "facility" | "webapp";

@@ -100,7 +100,7 @@ app.post("/announcement", async (req, res) => {
 
 //#endregion
 
-//#region Announcement
+//#region Maintenance
 
 app.get("/maintenances", async (req, res) => {
   try {

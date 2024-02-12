@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 
 function MaintenanceSchedule() {
-  /** @type {[object[], React.Dispatch<any>]} */
+  /** @type {[import('../../../../types').Maintenance[], React.Dispatch<React.SetStateAction<import('../../../../types').Maintenance[]>>]} */
+  // @ts-expect-error
   const [maintenances, setMaintenances] = useState([]);
 
   useEffect(() => {
@@ -28,11 +29,11 @@ function MaintenanceSchedule() {
 
     if (key === "type") {
       value = value.trim().toLowerCase();
-      if (value !== "facility" && value !== "website") {
+      if (value !== "facility" && value !== "webapp") {
         value = "Facility";
-        alert('Type can only be "Facility" or "Website"');
+        alert('Type can only be "Facility" or "Webapp"');
       }
-    } else if (key === "maintenance_date") {
+    } else if (key === "maintenance_datetime") {
       const date = new Date(value);
       if (isNaN(date.getTime())) {
         const date = new Date();
@@ -52,16 +53,15 @@ function MaintenanceSchedule() {
   }
 
   function handleAddRow() {
-    setMaintenances((prevData) => [
-      ...prevData,
-      {
-        title: "",
-        type: "",
-        assigned_to: "",
-        maintenance_date: "",
-        maintenance_time: ""
-      }
-    ]);
+    /** @type {import('../../../../types').Maintenance} */
+    const emptyMaintenance = {
+      title: "",
+      type: "",
+      assigned_to: "",
+      maintenance_datetime: "",
+      maintenance_time: ""
+    };
+    setMaintenances((prevData) => [...prevData, emptyMaintenance]);
   }
 
   async function handleSave() {
@@ -78,6 +78,34 @@ function MaintenanceSchedule() {
     }
   }
 
+  /**
+   * @return {React.JSX.Element[]}
+   */
+  function getMaintenances() {
+    return maintenances.map((obj, i) => {
+      const date = new Date(obj.maintenance_datetime);
+      const dateStr = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
+      return (
+        <tr key={i}>
+          <td>{i + 1}</td>
+          <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "type", e.target.innerText)}>
+            {obj.type}
+          </td>
+          <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "title", e.target.innerText)}>
+            {obj.title}
+          </td>
+          <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "assigned_to", e.target.innerText)}>
+            {obj.assigned_to}
+          </td>
+          <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "maintenance_datetime", e.target.innerText)}>
+            {dateStr}
+          </td>
+        </tr>
+      );
+    });
+  }
+
   return (
     <div className="maintenance-schedule-container">
       <h2>Maintenance Schedule</h2>
@@ -85,31 +113,13 @@ function MaintenanceSchedule() {
         <thead>
           <tr>
             <th>Number</th>
-            <th>Title</th>
             <th>Type</th>
+            <th>Title</th>
             <th>Assigned To</th>
             <th>Maintenance Date</th>
           </tr>
         </thead>
-        <tbody>
-          {maintenances.map((obj, i) => (
-            <tr key={i}>
-              <td>{i + 1}</td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "title", e.target.innerText)}>
-                {obj.title}
-              </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "type", e.target.innerText)}>
-                {obj.type}
-              </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "assigned_to", e.target.innerText)}>
-                {obj.assigned_to}
-              </td>
-              <td contentEditable="true" onBlur={(e) => handleCellEdit(i, "maintenance_date", e.target.innerText)}>
-                {obj.maintenance_date}
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{getMaintenances()}</tbody>
       </table>
       <button className="add-row" onClick={handleAddRow}>
         + Add Row

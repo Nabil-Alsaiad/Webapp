@@ -73,6 +73,29 @@ CREATE TABLE
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     type CHAR(10) NOT NULL,
-    assigned_to_id INT NOT NULL REFERENCES accounts (id),
-    maintenance_date DATETIME NOT NULL
+    assigned_to INT REFERENCES accounts (id),
+    maintenance_datetime DATETIME NOT NULL
+  );
+
+DROP TABLE IF EXISTS maintenance_reports;
+
+CREATE TABLE
+  maintenance_reports (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    maintenance_id INT NOT NULL REFERENCES maintenances (id),
+    description TEXT NOT NULL,
+    resolved TINYINT (1) NOT NULL,
+    approved TINYINT (1) NOT NULL DEFAULT 0,
+    submitted_by INT REFERENCES accounts (id),
+    submission_date DATE NOT NULL
+  );
+
+DROP TABLE IF EXISTS reports;
+
+CREATE TABLE
+  reports (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    type CHAR(20) NOT NULL,
+    description TEXT NOT NULL
   );

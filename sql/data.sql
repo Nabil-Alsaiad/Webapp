@@ -33,14 +33,6 @@ VALUES
   (4, '2024-01-13 14:15:00', 'D-15-08'),
   (5, '2024-01-13 15:30:00', 'E-14-02');
 
-CREATE TABLE
-  announcements (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  );
-
 INSERT INTO
   announcements (title, description)
 VALUES
@@ -52,3 +44,28 @@ VALUES
     'Security Alert',
     'We have received reports of suspicious activities in the area. Please be cautious and report any suspicious activities to the security.'
   );
+
+INSERT INTO
+  maintenances (title, type, assigned_to, maintenance_datetime)
+VALUES
+  ('something', 'facility', 1, '2023-03-15 14:30:00'),
+  ('something', 'webapp', 2, '2023-03-16 15:45:00');
+
+INSERT INTO
+  maintenance_reports (
+    maintenance_id,
+    description,
+    resolved,
+    submitted_by,
+    submission_date
+  )
+VALUES
+  (1, 'Dummy description 1', 1, 1, '2024-01-01'),
+  (2, 'Dummy description 2', 0, 2, '2024-01-02');
+
+INSERT INTO
+  reports (title, type, description)
+VALUES
+  ('Report 1', 'facility', 'Description 1'),
+  ('Report 2', 'webapp', 'Description 2'),
+  ('Report 3', 'other', 'Description 3');

@@ -16,7 +16,7 @@ export declare type SQLUpdate = `UPDATE ${string} SET ${string} WHERE ${string}`
 export declare type SQLDelete = `DELETE FROM ${string} WHERE ${string}`;
 
 export declare type Report = {
-  type: MaintenanceTypes;
+  type: MaintenanceTypes | "other";
   title: string;
   description: string;
 };
@@ -31,11 +31,13 @@ export declare type Announcement = {
 export declare type Maintenance = {
   id: ID;
   title: string;
-  type: "facility" | "website";
+  type: MaintenanceTypes;
   assigned_to_id?: ID;
   assigned_to?: Email;
   maintenance_date: Date;
 };
+
+export declare type MaintenanceTypes = "facility" | "webapp";
 
 export declare type Account = {
   id: ID;

@@ -47,7 +47,8 @@ function ReportForm({ onCreateReport }) {
   const [description, setDescription] = useState("");
 
   async function handleCreateReport() {
-    if (type !== "Facility" && type !== "Webapp") {
+    const types = ["facility", "webapp", "other"];
+    if (!types.includes(type)) {
       alert("Must select a type");
       return;
     }
@@ -89,8 +90,9 @@ function ReportForm({ onCreateReport }) {
         Type
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="">Select Type</option>
-          <option value="facility">Facility Maintenance</option>
-          <option value="webapp">Webapp Maintenance</option>
+          <option value="facility">Facility</option>
+          <option value="webapp">Webapp</option>
+          <option value="other">Other</option>
         </select>
       </label>
       <label>

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import AccountInformation from "../core/AccountInformation";
 import ViewUser from "../core/ViewUser";
@@ -18,7 +19,7 @@ function AdminSidebar({ onPageChosen }) {
 
   useEffect(() => {
     if (pageIndex === 0) {
-      onPageChosen(<AccountInformation extra={true} />);
+      onPageChosen(<AccountInformation />);
     } else if (pageIndex === 1) {
       onPageChosen(<ViewUser />);
     } else if (pageIndex === 2) {

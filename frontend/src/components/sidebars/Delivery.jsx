@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import AccountInformation from "../core/AccountInformation";
 import QRVerification from "../core/QRVerification";

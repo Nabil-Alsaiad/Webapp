@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import ReportPage from "../core/ReportPage";
 import AnnouncementPage from "../core/AnnouncementPage";

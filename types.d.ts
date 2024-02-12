@@ -25,7 +25,7 @@ export declare type Announcement = {
   id: ID;
   title: string;
   description: string;
-  created_at?: Date;
+  created_at?: string | Date;
 };
 
 export declare type Maintenance = {
@@ -56,7 +56,7 @@ export declare type Account = {
   password: string;
   name?: string;
   phone?: Phone;
-  register_date?: Date;
+  register_date?: string | Date;
 };
 
 export declare type AccountExtra = {

@@ -1,7 +1,10 @@
+--- Starting file for the database
+--- Create and use the database
 CREATE DATABASE IF NOT EXISTS visitor_management;
 
 USE visitor_management;
 
+--- Create all the tables
 DROP TABLE IF EXISTS acc_types;
 
 CREATE TABLE

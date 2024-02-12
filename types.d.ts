@@ -51,15 +51,17 @@ export declare type MaintenanceTypes = "facility" | "webapp";
 
 export declare type Account = {
   id: ID;
-  accType: AccountTypes;
+  type_id?: ID;
+  accType?: AccountTypes;
   email: Email;
-  password: string;
+  password?: string;
   name?: string;
   phone?: Phone;
   register_date?: string | Date;
 };
 
 export declare type AccountExtra = {
+  acc_id?: ID;
   license_id?: number;
   vehicle_plate?: string;
   company_name?: string;

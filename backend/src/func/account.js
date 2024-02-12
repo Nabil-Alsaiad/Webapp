@@ -1,38 +1,23 @@
 import db from "../db.js";
+import { updateAccountExtra, getAccountExtra, getAccountsExtra } from "./accountExtra.js";
 import { convertAccountType } from "../accTypes.js";
 
 /**
  * @param {import('../../../types').FullAccount} data
  * @returns {Promise<void>}
  */
-export async function updateAccount(data) {
-  const toUpdate = [];
-  const values = [];
-
-  const keys = ["accType", "email", "password", "name", "phone"];
-  keys.forEach((key) => {
-    if (data[key]) {
-      if (key === "accType") {
-        toUpdate.push("type_id = ?");
-        values.push(convertAccountType(data[key]));
-      } else {
-        toUpdate.push(`${key} = ?`);
-        values.push(data[key]);
-      }
-    }
-  });
-
-  if (toUpdate.length === 0) {
-    throw new Error("No data to update");
+export async function updateAccount({ id, accType, email, password, name, phone, license_id, company_name, vehicle_plate }) {
+  if (license_id || company_name || vehicle_plate) {
+    updateAccountExtra({ acc_id: id, license_id, company_name, vehicle_plate });
   }
 
   const sql = `
     UPDATE accounts
-    SET ${toUpdate.join(", ")}
+    SET accType = ?, email = ?, password = ?, name = ?, phone = ?
     WHERE id = ?
   `;
-
-  await db.query(sql, [...values, data.id]);
+  const values = [accType, email, password, name, phone, id];
+  await db.query(sql, values);
 }
 
 /**
@@ -52,27 +37,37 @@ export async function getAccount(data) {
   });
 
   if (conditions.length === 0) {
-    throw new Error("No data to get");
+    return null;
   }
 
   const sql = `SELECT * FROM accounts WHERE ${conditions.join(" AND ")}`;
 
+  /** @type {import('../../../types').Account[][]} */
+  // @ts-expect-error
   const [rows] = await db.query(sql, values);
-  return rows[0];
+  const account = rows[0];
+
+  const accExtra = await getAccountExtra({ acc_id: account.id });
+  return { ...account, ...accExtra };
 }
 
 /**
  * @returns {Promise<import('../../../types').Account[] | null>}
  */
 export async function getAccounts() {
+  const accountsExtra = await getAccountsExtra();
+
   const sql = "SELECT * FROM accounts";
 
-  const [rows] = await db.query(sql);
+  /** @type {import('../../../types').Account[][]} */
   // @ts-expect-error
+  const [rows] = await db.query(sql);
   return rows.map((r) => {
     r.accType = convertAccountType(r.type_id);
     delete r.password;
     delete r.type_id;
-    return r;
+
+    const extra = accountsExtra?.find((e) => e.acc_id === r.id);
+    return { ...r, ...extra };
   });
 }

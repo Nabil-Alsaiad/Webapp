@@ -1,42 +1,32 @@
 import db from "../db.js";
 
 /**
- * @param {string} name
- * @param {import('../../../types').Phone} phone
- * @param {import('../../../types').Email} email
- * @param {string} license_id
- * @param {import('../../../types').ID} company_id
+ * @param {import('../../../types').AccountExtra} data
  * @returns {Promise<object | null>}
  */
-export async function updateAccountWithExtra(name, phone, email, license_id, company_id) {
+export async function updateAccountExtra({ acc_id, license_id, company_name, vehicle_plate }) {
   const sql = `
-  INSERT INTO accounts_extra (name, phone, email, license_id, company_id)
-  VALUES (?, ?, ?, ?, ?)
+    INSERT INTO accounts_extra (acc_id, license_id, company_name, vehicle_plate)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE license_id = VALUES(license_id), company_name = VALUES(company_name), vehicle_plate = VALUES(vehicle_plate)
   `;
-
-  await db.query(sql, [name, phone, email, license_id, company_id]);
-  return await getAccountWithExtra({ name, phone, email, license_id, company_id });
+  const values = [license_id, company_name, vehicle_plate, acc_id];
+  await db.query(sql, values);
 }
 
 /**
- * @param {object} options
- * @param {import('../../../types').ID} [options.id]
- * @param {string} [options.name]
- * @param {import('../../../types').Phone} [options.phone]
- * @param {import('../../../types').Email} [options.email]
- * @param {string} [options.license_id]
- * @param {import('../../../types').ID} [options.company_id]
- * @returns {Promise<object | null>}
+ * @param {Partial<import('../../../types').AccountExtra>} data
+ * @returns {Promise<import('../../../types').AccountExtra | null>}
  */
-export async function getAccountWithExtra(options) {
+export async function getAccountExtra(data) {
   const conditions = [];
   const params = [];
 
-  const keys = ["id", "name", "phone", "email", "license_id", "company_id"];
+  const keys = ["acc_id", "license_id", "company_id", "vehicle_plate"];
   keys.forEach((key) => {
-    if (options[key]) {
+    if (data[key]) {
       conditions.push(`${key} = ?`);
-      params.push(options[key]);
+      params.push(data[key]);
     }
   });
 
@@ -51,12 +41,16 @@ export async function getAccountWithExtra(options) {
 }
 
 /**
- * @returns {Promise<object[] | null>}
+ * @returns {Promise<import('../../../types').AccountExtra[] | null>}
  */
-export async function getAccountsWithExtra() {
+export async function getAccountsExtra() {
   const sql = "SELECT * FROM accounts_extra";
 
-  const [rows] = await db.query(sql);
+  /** @type {import('../../../types').AccountExtra[][]} */
   // @ts-expect-error
-  return rows;
+  const [rows] = await db.query(sql);
+  return rows.map((r) => {
+    delete r.acc_id;
+    return r;
+  });
 }

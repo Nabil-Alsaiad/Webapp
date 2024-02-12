@@ -15,6 +15,12 @@ export declare type SQLInsert = `INSERT INTO ${string} (${string}) VALUES (${str
 export declare type SQLUpdate = `UPDATE ${string} SET ${string} WHERE ${string}`;
 export declare type SQLDelete = `DELETE FROM ${string} WHERE ${string}`;
 
+export declare type Report = {
+  type: MaintenanceTypes;
+  title: string;
+  description: string;
+};
+
 export declare type Announcement = {
   id: ID;
   title: string;

@@ -7,6 +7,7 @@ import { createAnnouncement, getAnnouncements } from "./func/announcement.js";
 import { getMaintenances, updateMaintenances } from "./func/maintenance.js";
 import { approveMaintenanceReport, createMaintenanceReport, getMaintenanceReports } from "./func/maintenanceReport.js";
 import { createReport, getReports } from "./func/report.js";
+import { checkQRCode, createQRCode } from "./func/QRCode.js";
 
 const app = express();
 app.use(cors());
@@ -173,6 +174,31 @@ app.post("/report", async (req, res) => {
   try {
     await createReport(req.body);
     res.status(200).json({ message: "Created" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+//#endregion
+
+//#region QR Code
+
+app.post("/qr", async (req, res) => {
+  try {
+    await createQRCode(req.body);
+    res.status(200).json({ message: "Stored" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.toString() });
+  }
+});
+
+app.get("/qr/:id", async (req, res) => {
+  try {
+    const { id: acc_id } = req.params;
+    await checkQRCode(parseInt(acc_id));
+    res.status(200).json({ message: "Passed" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.toString() });

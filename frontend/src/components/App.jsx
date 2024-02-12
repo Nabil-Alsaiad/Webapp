@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 function App() {
-  const navigate = useNavigate();
   const savedAccount = localStorage.getItem("loggedInAccount");
   const { accType } = savedAccount ? JSON.parse(savedAccount) : { accType: "" };
+
+  const navigate = useNavigate();
+  const [contentPage, setContentPage] = useState(<></>);
 
   useEffect(() => {
     if (savedAccount === null) {
@@ -16,8 +18,10 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Sidebar accType={accType} />
+      <div>
+        <Sidebar accType={accType} onContentPageChange={setContentPage} />
+      </div>
+      <div className="content">{contentPage}</div>
     </>
   );
 }

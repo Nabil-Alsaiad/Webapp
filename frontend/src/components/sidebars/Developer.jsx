@@ -5,6 +5,10 @@ import MaintenanceSchedule from "../core/MaintenanceSchedule";
 import SubpagesContainer from "../core/SubpagesContainer";
 import PropTypes from "prop-types";
 
+DeveloperSidebar.propTypes = {
+  onPageChosen: PropTypes.func.isRequired
+};
+
 /**
  * @param {object} options
  * @param {Function} options.onPageChosen
@@ -27,9 +31,5 @@ function DeveloperSidebar({ onPageChosen }) {
     </li>
   );
 }
-
-DeveloperSidebar.propTypes = {
-  onPageChosen: PropTypes.func.isRequired
-};
 
 export default DeveloperSidebar;

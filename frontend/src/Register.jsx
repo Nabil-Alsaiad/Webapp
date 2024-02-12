@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -67,16 +68,20 @@ function Register() {
         </label>
         <br />
         <label>
-          Email:
+          Email
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         <br />
         <label>
-          Password:
+          Password
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
         <br />
         <button type="submit">Submit</button>
+        <label>Already have an account?, move to the login page</label>
+        <button type="button" onClick={() => navigate("/login")}>
+          Login
+        </button>
       </form>
     </div>
   );

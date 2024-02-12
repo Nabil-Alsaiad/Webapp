@@ -62,31 +62,24 @@ function Login() {
     localStorage.setItem("loggedInAccount", JSON.stringify({ id, accType, email }));
     navigate("/");
   };
-  
-  const Register = () => {
-    setShowRegister(false); // Hide register button and label when registration page is navigated
-    navigate("/register");
-  };
 
-  
   return (
     <div>
       <h1>Visitor Management System</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Email:
+          Email
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
-        <br />
         <label>
-          Password:
+          Password
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <br />
         <button type="submit">Submit</button>
-        <br />
-        <label>For visitor or Delivery, Please register first:</label>
-        <button type="button" onClick={Register}>Register</button>
+        <label>For visitor or Delivery, Please register first</label>
+        <button type="button" onClick={() => navigate("/register")}>
+          Register
+        </button>
       </form>
     </div>
   );

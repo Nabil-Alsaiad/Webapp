@@ -62,7 +62,13 @@ function Login() {
     localStorage.setItem("loggedInAccount", JSON.stringify({ id, accType, email }));
     navigate("/");
   };
+  
+  const Register = () => {
+    setShowRegister(false); // Hide register button and label when registration page is navigated
+    navigate("/register");
+  };
 
+  
   return (
     <div>
       <h1>Visitor Management System</h1>
@@ -78,6 +84,9 @@ function Login() {
         </label>
         <br />
         <button type="submit">Submit</button>
+        <br />
+        <label>For visitor or Delivery, Please register first:</label>
+        <button type="button" onClick={Register}>Register</button>
       </form>
     </div>
   );

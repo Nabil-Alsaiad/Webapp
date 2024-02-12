@@ -17,6 +17,8 @@ Sidebar.propTypes = {
  */
 function Sidebar({ accType, onContentPageChange }) {
   const navigate = useNavigate();
+  /** @type {[React.JSX.Element, React.Dispatch<React.SetStateAction<React.JSX.Element>>]} */
+  // @ts-expect-error
   const [SidebarComponent, setSidebarComponent] = useState(null);
 
   useEffect(() => {
@@ -37,15 +39,23 @@ function Sidebar({ accType, onContentPageChange }) {
     navigate("/login");
   };
 
-  if (!SidebarComponent) {
-    return <></>;
+  /**
+   * @param {React.JSX.Element} c
+   */
+  function handleContentPageChange(c) {
+    onContentPageChange(c);
   }
 
   return (
     <nav>
-      <ul>
-        <SidebarComponent onPageChosen={(c) => onContentPageChange(c)} />
-      </ul>
+      {SidebarComponent && (
+        <ul>
+          {
+            // @ts-expect-error
+            <SidebarComponent onPageChosen={handleContentPageChange} />
+          }
+        </ul>
+      )}
       <ul>
         <a className="logout" onClick={onClick}>
           <i className="fas fa-sign-out-alt"></i>

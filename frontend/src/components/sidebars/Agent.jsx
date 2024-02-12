@@ -11,14 +11,13 @@ import PropTypes from "prop-types";
  */
 function AgentSidebar({ onPageChosen }) {
   const [pageIndex, setPageIndex] = useState(0);
+  const pages = [<ReportPage key={0} />, <AnnouncementPage key={1} />];
 
-  useEffect(() => {
-    if (pageIndex === 0) {
-      onPageChosen(<ReportPage />);
-    } else if (pageIndex === 1) {
-      onPageChosen(<AnnouncementPage />);
-    }
-  }, [pageIndex, onPageChosen]);
+  useEffect(
+    () => onPageChosen(pages[pageIndex]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageIndex]
+  );
 
   return (
     <>
@@ -28,7 +27,6 @@ function AgentSidebar({ onPageChosen }) {
           <span className="nav-item">Report Page</span>
         </a>
       </li>
-
       <li>
         <a onClick={() => setPageIndex(1)}>
           <i className="fas fa-bullhorn"></i>

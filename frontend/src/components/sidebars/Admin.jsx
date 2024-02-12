@@ -16,29 +16,16 @@ import SubpagesContainer from "../core/SubpagesContainer";
  */
 function AdminSidebar({ onPageChosen }) {
   const [pageIndex, setPageIndex] = useState(0);
+  const pages = [<AccountInformation key={0} />, <ViewUser key={1} />, <ReportPage key={2} />, <AnnouncementPage key={3} />, <MaintenanceSchedule key={4} />, <MaintenanceApproval key={5} />];
 
-  useEffect(() => {
-    if (pageIndex === 0) {
-      onPageChosen(<AccountInformation />);
-    } else if (pageIndex === 1) {
-      onPageChosen(<ViewUser />);
-    } else if (pageIndex === 2) {
-      onPageChosen(<ReportPage />);
-    } else if (pageIndex === 3) {
-      onPageChosen(<AnnouncementPage />);
-    } else if (pageIndex === 4) {
-      onPageChosen(<MaintenanceSchedule />);
-    } else if (pageIndex === 5) {
-      onPageChosen(<MaintenanceApproval />);
-    }
-  }, [pageIndex, onPageChosen]);
+  useEffect(
+    () => onPageChosen(pages[pageIndex]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageIndex]
+  );
 
-  const handleClick1 = (/** @type {number} */ i) => {
-    setPageIndex(i);
-  };
-  const handleClick2 = (/** @type {number} */ i) => {
-    setPageIndex(i + 4);
-  };
+  const handleClick1 = (/** @type {number} */ i) => setPageIndex(i);
+  const handleClick2 = (/** @type {number} */ i) => setPageIndex(i + 4);
 
   return (
     <>

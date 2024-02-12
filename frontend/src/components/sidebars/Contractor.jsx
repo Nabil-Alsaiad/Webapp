@@ -11,19 +11,18 @@ import PropTypes from "prop-types";
  * @returns {React.JSX.Element}
  */
 function ContractorSidebar({ onPageChosen }) {
-  const [subpageIndex, setSubpageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
+  const pages = [<MaintenanceSchedule key={0} />, <ReportSubmission key={1} />];
 
-  useEffect(() => {
-    if (subpageIndex === 0) {
-      onPageChosen(<MaintenanceSchedule />);
-    } else if (subpageIndex === 1) {
-      onPageChosen(<ReportSubmission />);
-    }
-  }, [subpageIndex, onPageChosen]);
+  useEffect(
+    () => onPageChosen(pages[pageIndex]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageIndex]
+  );
 
   return (
     <li>
-      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Maintenance"} iconName={"wrench"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
+      <SubpagesContainer onIndexChange={setPageIndex} name={"Maintenance"} iconName={"wrench"} subpagesNames={["Maintenance Schedule", "Report Submission"]} />
     </li>
   );
 }

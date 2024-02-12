@@ -11,19 +11,18 @@ import PropTypes from "prop-types";
  * @returns {React.JSX.Element}
  */
 function DeliverySidebar({ onPageChosen }) {
-  const [subpageIndex, setSubpageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
+  const pages = [<AccountInformation key={0} extra={true} />, <QRVerification key={1} />];
 
-  useEffect(() => {
-    if (subpageIndex === 0) {
-      onPageChosen(<AccountInformation />);
-    } else if (subpageIndex === 1) {
-      onPageChosen(<QRVerification />);
-    }
-  }, [subpageIndex, onPageChosen]);
+  useEffect(
+    () => onPageChosen(pages[pageIndex]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageIndex]
+  );
 
   return (
     <li>
-      <SubpagesContainer onIndexChange={setSubpageIndex} name={"Profile"} subpagesNames={["Account Information", "QR Verification"]} />
+      <SubpagesContainer onIndexChange={setPageIndex} name={"Profile"} subpagesNames={["Account Information", "QR Verification"]} />
     </li>
   );
 }

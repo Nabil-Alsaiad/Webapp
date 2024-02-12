@@ -17,12 +17,12 @@ function App() {
   }, [navigate, savedAccount]);
 
   return (
-    <>
+    <div>
       <div>
         <Sidebar accType={accType} onContentPageChange={setContentPage} />
       </div>
       <div className="content">{contentPage}</div>
-    </>
+    </div>
   );
 }
 
